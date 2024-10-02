@@ -1,0 +1,13 @@
+/* reseting styling */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* global stylyng */
+
+body {
+  background-image: url("../Asset/REKENI BACKDROP.png");
+}
