@@ -20,6 +20,10 @@ a.nav-text.nav-link {
   font-weight: 400;
   font-style: normal;
   font-size: 16px;
+
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
 }
 
 a.nav-text.nav-link:hover {
@@ -58,6 +62,10 @@ a.nav-text.nav-link:hover {
   border-radius: 24px;
   background: linear-gradient(180deg, #f77d3a -51.65%, #e3333d 76.86%);
   border: none;
+
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
 }
 
 .search-gen.btn.btn-primary:hover {
