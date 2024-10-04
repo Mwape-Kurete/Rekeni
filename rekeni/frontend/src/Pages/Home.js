@@ -12,7 +12,7 @@ import "../Styles/main.css";
 
 function Home() {
   return (
-    <Container fluid="md">
+    <Container fluid>
       <Row>
         <Col xs={12}>
           <NavbarComp />
