@@ -20,17 +20,22 @@ function ReviewCardComp() {
       </Col>
       <Col className="review-card-body col-6 d-flex align-items-center">
         <Card.Body className="card-body-content-review">
-          <Card.Title>Album Title</Card.Title>
+          <Card.Title className="album-title">Album Title</Card.Title>
           {/* Rating Section */}
           <div class="d-flex align-items-center stars-rating">
             {/* Filled Stars (for a rating of 3 out of 5) */}
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning rating-stars"></i>
+            <i class="bi bi-star-fill text-warning rating-stars"></i>
+            <i class="bi bi-star-fill text-warning rating-stars"></i>
             {/* Unfilled Stars */}
-            <i class="bi bi-star"></i>
-            <i class="bi bi-star"></i>
-            <span class="ms-2">(3/5)</span>
+            <i class="bi bi-star-fill rating-stars"></i>
+            <i class="bi bi-star-fill rating-stars"></i>
+            <span
+              class="ms-2 written-rating
+            "
+            >
+              (3/5)
+            </span>
           </div>
           {/* End Of Rating Section */}
           <Card.Text>

@@ -1,17 +1,19 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
+
+import "../Styles/ComponentStyles/albumcarocard.css";
 
 function AlbumCaroComp() {
   return (
-    <Card style={{ width: "18rem" }} className="bg-dark text-white">
-      <Card.Img src="holder.js/100px270" alt="Card image" />
+    <Card style={{ width: "18rem" }} className="bg-dark album-overlays">
+      <Card.Img src={placeholderImg} alt="Card image" />
       <Card.ImgOverlay>
-        <Card.Title>Card title</Card.Title>
+        <Card.Title>Album title</Card.Title>
         <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
+          by: <span className="artist-name">artist name</span>
         </Card.Text>
-        <Card.Text>Last updated 3 mins ago</Card.Text>
+        <Card.Text>release date</Card.Text>
       </Card.ImgOverlay>
     </Card>
   );

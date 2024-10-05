@@ -29,7 +29,10 @@ function Home() {
           <AlbumCaroComp />
         </Col>
       </Row>
-      <FooterComp />
+
+      <footer>
+        <FooterComp />
+      </footer>
     </Container>
   );
 }

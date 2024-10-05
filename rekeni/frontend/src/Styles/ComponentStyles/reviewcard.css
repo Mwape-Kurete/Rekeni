@@ -57,3 +57,40 @@ button.like-button.btn.btn-primary {
 .custom-color:hover {
   color: rgb(227, 51, 61) !important;
 }
+
+.rating-stars:hover {
+  color: #e9e94e;
+  cursor: pointer;
+}
+
+.card-body-content-review > .card-title {
+  font-family: "Montserrat Alternates";
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.card-body-content-review > .card-text {
+  font-family: "Montserrat Alternates";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.user-information > .card-text {
+  font-family: "Montserrat Alternates";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.written-rating {
+  font-family: "Montserrat Alternates";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
