@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Modak&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.card.review-card {
+  justify-content: center;
+
+  width: 750px;
+  height: 250px;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+}
+
+.review-card-img {
+  display: inline-block;
+
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.review-card-img-cont {
+  width: 180px !important;
+  margin-right: 40px;
+}
+
+.review-card-body {
+  max-width: 100%;
+}

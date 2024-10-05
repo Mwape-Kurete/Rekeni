@@ -1,20 +1,25 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 
+import "../Styles/ComponentStyles/jumbotron.css";
+
 function JumbotronComp() {
-  <>
-    <Row>
-      <Col>
-        <h1>REKENI</h1>
-      </Col>
-      <Col>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam
-        blanditiis adipisci aspernatur beatae quibusdam fugiat minus aliquid
-        molestias, eveniet facere illo possimus doloremque odio sint repudiandae
-        excepturi rem. Ducimus, omnis!
-      </Col>
-    </Row>
-  </>;
+  return (
+    <>
+      <Row className="whole-jumbotron">
+        <Col>
+          <h1 className="jumbo-header d-flex justify-content-end">REKENI</h1>
+        </Col>
+        <Col>
+          <p className="jumbo-copy d-flex justify-content-start">
+            Discover the heartbeat of music that resonates with your soul. Share
+            your favorites, explore new sounds, and connect with friends through
+            reviews and recommendations – all with Rekeni.
+          </p>
+        </Col>
+      </Row>
+    </>
+  );
 }
 
 export default JumbotronComp;

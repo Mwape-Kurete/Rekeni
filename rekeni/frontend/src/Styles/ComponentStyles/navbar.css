@@ -50,6 +50,22 @@ a.nav-text.nav-link:hover {
   border-radius: 0px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 10px;
+
+  border: none;
+  border-top: none;
+}
+
+.me-2.search-form.form-control::placeholder {
+  color: white;
+  font-family: "Montserrat Alternates", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.me-2.search-form.form-control:focus {
+  color: #e9e94e;
+  -webkit-box-shadow: 0px 0px 46px 0px rgba(233, 233, 78, 0.19);
+  -moz-box-shadow: 0px 0px 46px 0px rgba(233, 233, 78, 0.19);
+  box-shadow: 0px 0px 46px 0px rgba(233, 233, 78, 0.19);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-top: none;
 }
