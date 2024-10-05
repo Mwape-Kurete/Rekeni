@@ -3,7 +3,7 @@
 .card.review-card {
   justify-content: center;
 
-  width: 750px;
+  width: 700px;
   height: 250px;
 
   background: rgba(255, 255, 255, 0.05);
@@ -28,6 +28,32 @@
   margin-right: 40px;
 }
 
-.review-card-body {
-  max-width: 100%;
+.review-card-body.col-6.d-flex.align-items-center.col {
+  width: 60%;
+}
+
+.like-btn.row {
+  margin-top: 10px;
+}
+
+.card-body.card-body-content-review {
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+}
+
+.d-flex.align-items-center.stars-rating {
+  margin-bottom: 10px;
+}
+
+button.like-button.btn.btn-primary {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border-color: rgba(255, 255, 255, 0);
+}
+
+.custom-color {
+  color: white;
+}
+.custom-color:hover {
+  color: rgb(227, 51, 61) !important;
 }

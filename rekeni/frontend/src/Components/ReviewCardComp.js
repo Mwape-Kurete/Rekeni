@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import "../Styles/ComponentStyles/reviewcard.css";
 
@@ -18,29 +19,48 @@ function ReviewCardComp() {
         />
       </Col>
       <Col className="review-card-body col-6 d-flex align-items-center">
-        <Card.Body>
+        <Card.Body className="card-body-content-review">
           <Card.Title>Album Title</Card.Title>
+          {/* Rating Section */}
+          <div class="d-flex align-items-center stars-rating">
+            {/* Filled Stars (for a rating of 3 out of 5) */}
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            {/* Unfilled Stars */}
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <span class="ms-2">(3/5)</span>
+          </div>
+          {/* End Of Rating Section */}
           <Card.Text>
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </Card.Text>
-          <Col className="username-handle">
-            <Card.Text>
-              <small>
-                <span>@username</span>
-              </small>
-            </Card.Text>
-          </Col>
-          <Col className="timestamp-review">
-            <Card.Text>
-              <small>
-                <span>00:00 01/01/2024</span>
-              </small>
-            </Card.Text>
-          </Col>
-          <Button className="like-button">
-            <i className="bi bi-heart-fill"></i>
-          </Button>
+
+          <Row className="user-information">
+            <Col className="username-handle">
+              <Card.Text>
+                <small>
+                  <span>@username</span>
+                </small>
+              </Card.Text>
+            </Col>
+            <Col className="timestamp-review d-flex justify-content-end">
+              <Card.Text>
+                <small>
+                  <span>00:00 01/01/2024</span>
+                </small>
+              </Card.Text>
+            </Col>
+          </Row>
+          <Row className="like-btn">
+            <Col className="col-12 d-flex justify-content-end">
+              <Button className="like-button">
+                <i className="bi bi-heart-fill custom-color"></i>
+              </Button>
+            </Col>
+          </Row>
         </Card.Body>
       </Col>
     </Card>
