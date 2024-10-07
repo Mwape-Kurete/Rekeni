@@ -6,9 +6,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import New from "./Pages/New";
 import Discover from "./Pages/Discover";
-import SearchGen from "./Pages/SearchGen";
 import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
+import SearchGen from "./Pages/SearchGen";
+import SignUp from "./Pages/SignUp";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/searchGen" element={<SearchGen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/searchGen" element={<SearchGen />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
     </div>
