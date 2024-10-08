@@ -22,10 +22,16 @@ function Home() {
         </Col>
       </Row>
       <Row>
-        <Col xs={6}>
+        <Col
+          xs={6}
+          className="review-sect-home d-flex justify-content-center overflow-auto"
+        >
           <ReviewcCardComp />
         </Col>
-        <Col xs={6}>
+        <Col
+          xs={6}
+          className="album-sect-home d-flex justify-content-start overflow-x-auto"
+        >
           <AlbumCaroComp />
         </Col>
       </Row>

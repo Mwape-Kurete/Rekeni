@@ -16,9 +16,23 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  scrollbar-width: auto; /* Changes the scrollbar to a thinner style */
+  scrollbar-color: #e3333d #f1f1f100; /* Thumb color and track color */
 }
 
-:root {
-  --bs-nav-link-color: white !important;
-  --bs-link-color-rgb: rgb(255, 255, 255) !important;
+/* For WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 15px; /* Width of the vertical scrollbar */
+  height: 15px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f100; /* Background color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #e3333d; /* Thumb color */
+  border-radius: 10px; /* Rounded scrollbar corners */
+  border: 2px solid #f1f1f1; /* Space around thumb */
 }
