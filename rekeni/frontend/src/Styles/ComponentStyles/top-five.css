@@ -1,91 +1,57 @@
-.container.top-cont {
-  position: absolute;
-  height: 300px;
-  width: 100%;
-  top: 60px;
-  left: calc(50% - 300px);
+/* Basic container styling */
+.top-albums-container {
+  padding: 20px;
+}
+
+/* Album stack to align cards in a row */
+.album-stack {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-.card-top {
+/* Album card styling */
+.album-card {
+  width: 292px;
+  height: 292px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  margin-right: -60px; /* Overlap effect */
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+/* On hover, bring the card to the front */
+.album-card:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* Overlay to show title */
+.album-overlay {
   display: flex;
-  height: 180px;
-  width: 180px;
-  background-color: #17141d;
-  border-radius: 10px;
-  box-shadow: -1rem 0 3rem #000;
-  /*   margin-left: -50px; */
-  transition: 0.4s ease-out;
-  position: relative;
-  left: 0px;
-}
-
-.card-top:not(:first-child) {
-  margin-left: -50px;
-}
-
-.card-top:hover {
-  transform: translateY(-20px);
-  transition: 0.4s ease-out;
-}
-
-.card-top:hover ~ .card-top {
-  position: relative;
-  left: 50px;
-  transition: 0.4s ease-out;
-}
-
-.title {
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly dark overlay */
+  border-radius: 20px;
   color: white;
-  font-weight: 300;
-  position: absolute;
-  left: 20px;
-  top: 15px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.bar {
-  position: absolute;
-  top: 100px;
-  left: 20px;
-  height: 5px;
-  width: 150px;
+/* Show overlay on hover */
+.album-card:hover .album-overlay {
+  opacity: 1;
+  cursor: pointer;
 }
 
-.emptybar {
-  background-color: #2e3033;
-  width: 100%;
-  height: 100%;
-}
-
-.filledbar {
-  position: absolute;
-  top: 0px;
-  z-index: 3;
-  width: 0px;
-  height: 100%;
-  background: rgb(0, 154, 217);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 154, 217, 1) 0%,
-    rgba(217, 147, 0, 1) 65%,
-    rgba(255, 186, 0, 1) 100%
-  );
-  transition: 0.6s ease-out;
-}
-
-.card-top:hover .filledbar {
-  width: 120px;
-  transition: 0.4s ease-out;
-}
-
-.stroke {
-  stroke: white;
-  stroke-dasharray: 360;
-  stroke-dashoffset: 360;
-  transition: 0.6s ease-out;
-}
-
-.card-top:hover .stroke {
-  stroke-dashoffset: 100;
-  transition: 0.6s ease-out;
+/* Adjust margin for the last card to remove extra gap */
+.album-card:last-child {
+  margin-right: 0;
 }
