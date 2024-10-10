@@ -182,3 +182,13 @@ h1 {
   flex-shrink: 0; /* Prevent the card from shrinking */
   width: 10rem; /* Ensure the card has a fixed width */
 }
+
+.home-titles {
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 10px;
+}

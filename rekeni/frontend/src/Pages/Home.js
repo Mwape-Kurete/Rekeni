@@ -23,11 +23,11 @@ function Home() {
       </Row>
       <Row>
         <Col xs={6} className="review-sect-home">
-          <h1>Quickview: Reviews</h1>
+          <h1 className="home-titles">Quickview: Reviews</h1>
           <ReviewcCardComp />
         </Col>
         <Col xs={4} className="album-sect-home ">
-          <h1>Quickview: HIghly Rated Albums</h1>
+          <h1 className="home-titles">Quickview: Highly Rated Albums</h1>
           <div className="popular-albums">
             <AlbumCaroComp />
             <AlbumCaroComp />
