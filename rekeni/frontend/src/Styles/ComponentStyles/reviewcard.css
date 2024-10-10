@@ -94,3 +94,7 @@ button.like-button.btn.btn-primary {
   font-weight: 400;
   line-height: normal;
 }
+
+.no-likes {
+  margin-bottom: -10px;
+}

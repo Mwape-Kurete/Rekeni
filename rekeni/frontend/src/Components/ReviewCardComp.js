@@ -64,6 +64,9 @@ function ReviewCardComp() {
               <Button className="like-button">
                 <i className="bi bi-heart-fill custom-color"></i>
               </Button>
+              <p className="no-likes">
+                <span>0</span> Likes
+              </p>
             </Col>
           </Row>
         </Card.Body>

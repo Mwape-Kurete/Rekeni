@@ -1,57 +1,29 @@
-/* Basic container styling */
-.top-albums-container {
-  padding: 20px;
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Modak&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.card-box {
+  margin: 0 10px 0 10px;
 }
 
-/* Album stack to align cards in a row */
-.album-stack {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+.top-five-card {
+  width: 150px;
+  height: 150px;
+  transition: all 200ms !important;
 }
 
-/* Album card styling */
-.album-card {
-  width: 292px;
-  height: 292px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 20px;
-  margin-right: -60px; /* Overlap effect */
-  transition: transform 0.3s ease, z-index 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1;
+.meta-overlay {
+  color: black;
+  font-family: "Montserrat Alternates";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
-/* On hover, bring the card to the front */
-.album-card:hover {
-  transform: scale(1.1);
-  z-index: 10;
+.top-five-card:hover {
   cursor: pointer;
+  transform: scale(1);
 }
 
-/* Overlay to show title */
-.album-overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.6); /* Slightly dark overlay */
-  border-radius: 20px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Show overlay on hover */
-.album-card:hover .album-overlay {
-  opacity: 1;
-  cursor: pointer;
-}
-
-/* Adjust margin for the last card to remove extra gap */
-.album-card:last-child {
-  margin-right: 0;
+.top-five-card:hover .meta-overlay {
+  visibility: hidden;
 }

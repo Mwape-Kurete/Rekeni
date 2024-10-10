@@ -1,4 +1,5 @@
 /*global imports */
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Modak&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /* reseting styling */
 
@@ -35,4 +36,149 @@ body {
   background-color: #e3333d; /* Thumb color */
   border-radius: 10px; /* Rounded scrollbar corners */
   border: 2px solid #f1f1f1; /* Space around thumb */
+}
+h1 {
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 30px;
+}
+
+/* Home p[age */
+.review-sect-home {
+  margin-left: 1%;
+}
+
+.album-sect-home {
+}
+
+/*profile page */
+
+.top-albums-header {
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 30px;
+}
+
+.user-reviews {
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 20px;
+}
+
+.user-ratings {
+  text-align: center;
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 20px;
+}
+
+.user-ratings-reviews {
+  width: 90%;
+  padding: 10px;
+  margin-top: 200px;
+  margin-left: 20px;
+  margin-bottom: 100px;
+}
+
+.bottom-divider {
+  margin-top: 150px;
+}
+
+/*new rekenis */
+.recent-revs-header {
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 10px;
+}
+
+.recents {
+  margin-left: 25px;
+}
+
+.new-albums {
+  display: flex;
+  justify-content: end;
+}
+
+.new-ratings {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.new-albs-sect {
+  margin-left: 4%;
+}
+
+/* Horizontal scrolling container */
+.review-container {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 10px; /* Optional padding */
+  gap: 50px; /* Add space between cards */
+}
+
+.review-container::-webkit-scrollbar {
+  height: 5px; /* Custom scrollbar height */
+}
+
+.review-container::-webkit-scrollbar-thumb {
+  background-color: #e3333d; /* Color of the scroll thumb */
+  border-radius: 10px !important; /* Rounded scroll thumb */
+}
+
+/* Ensure the cards keep their size */
+.review-card {
+  flex-shrink: 0; /* Prevent the card from shrinking */
+  width: 10rem; /* Ensure the card has a fixed width */
+}
+
+.popular {
+  margin-top: 150px;
+  margin-left: 2%;
+}
+
+.popular-albums {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 10px; /* Optional padding */
+  gap: 50px; /* Add space between cards */
+}
+
+.popular-albums::-webkit-scrollbar {
+  height: 5px; /* Custom scrollbar height */
+}
+
+.popular-albums::-webkit-scrollbar-thumb {
+  background-color: #e3333d; /* Color of the scroll thumb */
+  border-radius: 10px !important; /* Rounded scroll thumb */
+}
+
+.album-overlays {
+  flex-shrink: 0; /* Prevent the card from shrinking */
+  width: 10rem; /* Ensure the card has a fixed width */
 }

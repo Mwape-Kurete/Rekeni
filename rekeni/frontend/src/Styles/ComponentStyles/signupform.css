@@ -46,8 +46,8 @@
 
 .signup-btn {
   margin-top: 10px;
-  border-radius: 45px;
-  background: #f76910;
+  border-radius: 45px !important;
+  background: #f76910 !important;
   width: 230px;
   height: 45px;
   font-family: "Montserrat Alternates";
@@ -55,12 +55,16 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  border: none;
+  border: none !important;
 }
 
 .signup-btn:hover {
-  background: linear-gradient(90deg, #e3333d -51.65%, #f77d3a 76.86%);
-  border: none;
+  background: linear-gradient(
+    90deg,
+    #e3333d -51.65%,
+    #f77d3a 76.86%
+  ) !important;
+  border: none !important;
 }
 
 .signup-login-hyperlink {
