@@ -8,25 +8,27 @@ import "../Styles/ComponentStyles/ai-search-sect.css";
 
 function DiscoverSearchCardComp() {
   return (
-    <Container>
+    <Container className="ai-whole-container d-flex justify-content-center align-items-center entire-search">
       <Row className="ai-containter">
         <Col
           xs={12}
-          className="d-flex justify-content-center align-items-center entire-search"
+          className="entire-search d-flex justify-content-center align-items-center"
         >
-          <h1 className="discover-ask-title  text-align-center">
-            Ask Rekeni A.I for album recommendations
-          </h1>
+          <div>
+            <h1 className="discover-ask-title text-align-center">
+              Ask Rekeni A.I for album recommendations
+            </h1>
+          </div>
         </Col>
         <Col xs={12}>
-          <Form className="d-flex justify-content-center align-items-center entire-search">
+          <Form className="d-flex justify-content-center align-items-center entire-search-discover">
             <Form.Control
               type="search"
               placeholder="Search"
-              className="me-2 search-form"
+              className="me-2 search-form search-discover"
               aria-label="Search"
             />
-            <Button className="search-discover">Search</Button>
+            <Button className="search-discover-button">Search</Button>
           </Form>
         </Col>
       </Row>

@@ -10,8 +10,11 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
+}
 
-  margin-bottom: 300px;
+.mindmap-container.container {
+  padding: 0 !important;
+  margin-bottom: 300px !important;
 }
 
 /* General mind map node for album cards */
@@ -19,13 +22,13 @@
   position: absolute;
 
   /*background colopr*/
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(7.5px);
-  -webkit-backdrop-filter: blur(7.5px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0) !important;
+  backdrop-filter: blur(7.5px) !important;
+  -webkit-backdrop-filter: blur(7.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
 
-  color: white;
+  color: white !important;
   padding: 10px 15px;
   border-radius: 15px;
   width: 195px;
@@ -36,19 +39,30 @@
 
 /* Central node styling */
 .central-node {
+  position: absolute;
   background: #ffffff33;
   backdrop-filter: blur(13px);
   -webkit-backdrop-filter: blur(13px);
   border: 1px solid rgba(255, 255, 255, 0.18);
 
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  color: #fff;
+  color: white !important;
+  padding: 10px 15px;
+  border-radius: 100px;
+  text-align: center;
+  margin: 10px;
+
   font-family: "Montserrat Alternates";
   font-size: 24px;
   font-style: normal;
@@ -74,25 +88,37 @@
   line-height: normal;
 }
 
+img.searched-album {
+  border-radius: 95px;
+  width: 180px;
+  height: 180px;
+}
+.image-discover {
+  margin-top: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+}
+
 /* Static positions for outer album nodes (cards) */
 .node-1 {
-  top: 20%;
-  left: 10%;
+  top: 5%;
+  left: 2%;
 }
 
 .node-2 {
-  top: 10%;
+  top: 2%;
   left: 70%;
 }
 
 .node-3 {
   top: 80%;
-  left: 35%;
+  left: 20%;
 }
 
 .node-4 {
-  top: 80%;
-  left: 70%;
+  top: 95%;
+  left: 60%;
 }
 
 .node-5 {
