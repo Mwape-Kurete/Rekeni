@@ -7,6 +7,8 @@ import SelectedAlbumCardComp from "../Components/SelectedAlbumCardComp";
 
 import { Container, Row, Col } from "react-bootstrap";
 
+import "../Styles/main.css";
+
 function SearchGen() {
   return (
     <Container fluid>
@@ -16,10 +18,14 @@ function SearchGen() {
         </Col>
       </Row>
       <Row className="album-populate">
-        <Col xs={12} className="expand-album-gen"></Col>
+        <Col xs={12} className="expand-album-gen">
+          <SearchResultComp />
+        </Col>
       </Row>
       <Row className="discover-search-cent">
-        <Col xs={12} className="discover-sect-card"></Col>
+        <Col xs={12} className="discover-sect-card">
+          <SelectedAlbumCardComp />
+        </Col>
       </Row>
     </Container>
   );

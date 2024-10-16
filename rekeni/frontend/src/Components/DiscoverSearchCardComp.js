@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -8,7 +8,7 @@ import "../Styles/ComponentStyles/ai-search-sect.css";
 
 function DiscoverSearchCardComp() {
   return (
-    <Container className="ai-whole-container d-flex justify-content-center align-items-center entire-search">
+    <div className="ai-whole-container d-flex justify-content-center align-items-center entire-search">
       <Row className="ai-containter">
         <Col
           xs={12}
@@ -32,7 +32,7 @@ function DiscoverSearchCardComp() {
           </Form>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 

@@ -10,6 +10,8 @@ import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
 import SearchGen from "./Pages/SearchGen";
 import SignUp from "./Pages/SignUp";
+import SingleAlbumPage from "./Pages/SingleAlbumPage";
+import SingleArtistPage from "./Pages/SingleArtistPage";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/searchGen" element={<SearchGen />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/singleArtist" element={<SingleArtistPage />} />
+          <Route path="/singleAlbum" element={<SingleAlbumPage />} />
         </Routes>
       </Router>
     </div>

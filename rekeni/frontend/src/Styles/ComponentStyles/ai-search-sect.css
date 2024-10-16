@@ -1,11 +1,12 @@
 .ai-whole-container.containter {
   margin: 0px !important;
   bottom: 0;
+  width: 100%;
 }
 
 .ai-containter {
   margin-top: 50px;
-  width: 120%;
+  width: 100%;
   height: 430px;
   flex-shrink: 0;
 
