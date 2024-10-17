@@ -43,16 +43,16 @@
   margin-top: 5%;
   width: 396px;
   height: 45px;
-  border-radius: 20px;
-  background: #f76910;
+  border-radius: 20px !important;
+  background: #f76910 !important;
   color: #fff;
   text-align: center;
-  font-family: "Montserrat Alternates";
+  font-family: "Montserrat Alternates" !important;
   font-size: 16px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 600 !important;
   line-height: normal;
-  border: none;
+  border: none !important;
 }
 
 .abls-top-cont {
