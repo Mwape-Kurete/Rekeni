@@ -198,3 +198,20 @@ h1 {
 .expand-album-gen {
   margin-bottom: 150px;
 }
+
+/* Single Album */
+a.btn.btn-next-page {
+  margin-top: 5%;
+  width: 396px;
+  height: 45px;
+  border-radius: 20px;
+  background: #f76910;
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat Alternates";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: -3%;
+  border: none;
+}

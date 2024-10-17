@@ -88,6 +88,25 @@ function TopStackComp() {
               </Card.ImgOverlay>
             </Card>
           </div>
+
+          {/* Card 5 */}
+          <div className="card-box">
+            <Card
+              className="bg-dark text-white top-five-card"
+              style={{ width: "10rem" }}
+            >
+              <Card.Img src={placeholderImg} alt="Card image" />
+              <Card.ImgOverlay className="meta-overlay">
+                <Card.Title className="top-title">Album Title</Card.Title>
+                <Card.Text className="top-details">
+                  By: <span className="artist">artist name</span>
+                </Card.Text>
+                <Card.Text className="top-details">
+                  Release Date: <span className="date">date</span>{" "}
+                </Card.Text>
+              </Card.ImgOverlay>
+            </Card>
+          </div>
         </Col>
       </Row>
     </Container>

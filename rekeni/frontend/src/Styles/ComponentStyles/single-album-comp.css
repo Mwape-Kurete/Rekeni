@@ -1,28 +1,75 @@
+.whole-container-albs {
+  margin: 50px;
+  margin-bottom: 5%;
+}
+
+.albs-img-cont {
+  display: inline-flex;
+  width: 400px;
+  height: 400px;
+  flex-shrink: 0;
+}
+
 .single-albs-cover {
   width: 400px;
   height: 400px;
   flex-shrink: 0;
   border-radius: 18px;
-
-  display: inline-flex;
 }
 
 .albs-meta {
-  display: block;
+  width: 80%;
   justify-content: center;
   margin-top: 25px;
-  margin-left: 25px;
+  color: #fff;
+  font-family: "Montserrat Alternates";
+  font-style: italic;
+  line-height: normal;
+}
+
+.single-album-name {
+  color: #e9e94e;
+}
+
+.single-artist-name {
+  color: #e9e94e;
+}
+
+.single-year {
+  color: #e9e94e;
+}
+
+.leave-reviewBTN {
+  margin-top: 5%;
+  width: 396px;
+  height: 45px;
+  border-radius: 20px;
+  background: #f76910;
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat Alternates";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  border: none;
 }
 
 .abls-top-cont {
   width: 500px;
-  height: 480px;
+  height: 380px;
   flex-shrink: 0;
 
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: -4px 4px 4px 0px rgba(0, 0, 0, 0.41);
   backdrop-filter: blur(12.5px);
+}
+
+.albs-action {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
 }
 
 .top-review {

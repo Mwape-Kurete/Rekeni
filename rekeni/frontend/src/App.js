@@ -12,6 +12,7 @@ import SearchGen from "./Pages/SearchGen";
 import SignUp from "./Pages/SignUp";
 import SingleAlbumPage from "./Pages/SingleAlbumPage";
 import SingleArtistPage from "./Pages/SingleArtistPage";
+import SelectTopAlbums from "./Pages/SelectTopAlbums";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/singleArtist" element={<SingleArtistPage />} />
           <Route path="/singleAlbum" element={<SingleAlbumPage />} />
+          <Route path="/selectTopAlbums" element={<SelectTopAlbums />} />
         </Routes>
       </Router>
     </div>

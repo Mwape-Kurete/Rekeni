@@ -25,7 +25,7 @@ function Profile() {
       <br />
       <Row>
         <Col xs={12}>
-          <h1 className="top-albums-header">Your Top 4 Albums</h1>
+          <h1 className="top-albums-header">Your Top 5 Albums</h1>
           <div className="cont-for-stack d-flex justify-content-center align-items-center">
             <TopStackComp />
           </div>
