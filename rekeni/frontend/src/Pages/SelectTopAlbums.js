@@ -14,20 +14,25 @@ function SelectTopAlbums() {
     <Container>
       <Row className="search-sect">
         <Col className="col-12">
-          <h1 className="search-for">Search For Albums</h1>
-          <SelectSearchBarArt />
+          <div className="d-flex justify-content-center">
+            <h1 className="search-for">Search For Albums</h1>
+            <SelectSearchBarArt />
+          </div>
         </Col>
       </Row>
       <Row className="chosen-sect">
         <Col className="col-12">
-          <p className="chosen">Your Chosen Top 5</p>
-
-          <AlbumArtistTileComp />
+          <div className="d-flex justify-content-center">
+            <p className="chosen">Your Chosen Top 5</p>
+            <AlbumArtistTileComp />
+          </div>
         </Col>
         <Col className="next-step">
-          <Link to="/selctArtist" className="btn btn-next-page">
-            Complete Sign Up
-          </Link>
+          <div className="d-flex justify-content-center align-items-center">
+            <Link to="/selctArtist" className="btn btn-next-page">
+              Complete Sign Up
+            </Link>
+          </div>
         </Col>
       </Row>
     </Container>
