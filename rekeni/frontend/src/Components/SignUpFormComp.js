@@ -13,10 +13,17 @@ import axios from "axios";
 import "../Styles/ComponentStyles/signupform.css";
 
 function SignUpFormComp() {
+  //validation
   const [validate, setValidated] = useState(false);
-
   const confirmationError = useRef(null);
-  const progressBar = useRef(null);
+
+  //set user info for DB
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  //function for handling submission
 
   return (
     <Container>
