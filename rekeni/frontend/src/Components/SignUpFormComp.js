@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
+import { UserContext } from "../Services/UserContext";
+import { useNavigate } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Container, Row, Col } from "react-bootstrap";
+import Tooltip from "react-bootstrap/Tooltip";
 import { Link } from "react-router-dom";
+
+import axios from "axios";
 
 import "../Styles/ComponentStyles/signupform.css";
 
 function SignUpFormComp() {
+  const [validate, setValidated] = useState(false);
+
+  const confirmationError = useRef(null);
+  const progressBar = useRef(null);
+
   return (
     <Container>
       <Row className="d-flex justify-content-center align-items-center">
@@ -16,9 +27,9 @@ function SignUpFormComp() {
           </h1>
           <Form className="signup-form-container">
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
-                type="text"
+                type="email"
                 placeholder="Enter your fullname"
                 className="login-signup-inputs"
               />
