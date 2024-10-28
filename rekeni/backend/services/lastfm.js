@@ -9,7 +9,7 @@ const getSimilarArtists = async (artistName) => {
       params: {
         method: "artist.getSimilar",
         artist: artistName,
-        api_key: process.env.LASTFM_API_KEY,
+        api_key: LASTFM_API_KEY,
         format: "json",
       },
     });
@@ -21,4 +21,4 @@ const getSimilarArtists = async (artistName) => {
   }
 };
 
-module.exports = { getRecommendations };
+module.exports = { getSimilarArtists };
