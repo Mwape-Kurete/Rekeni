@@ -7,7 +7,7 @@ const albumSchema = new mongoose.Schema({
   genre: { type: String },
   releaseDate: { type: String },
   artworkUrl: { type: String },
-  lastfmId: { type: String }, // Store iTunes album ID for easy lookup
+  spotifyId: { type: String, unique: true }, // Store Spotify album ID
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // Link reviews to albums
 });
 

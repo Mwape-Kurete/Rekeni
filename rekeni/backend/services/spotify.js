@@ -109,8 +109,36 @@ const getTopAlbumsByArtistSpotify = async (artistName) => {
   }
 };
 
+const getNewReleases = async () => {
+  const accessToken = await getSpotifyAccessToken();
+  console.log("Spotify Access Token", accessToken);
+
+  try {
+    const response = await axios.get(
+      "https://api.spotify.com/v1/browse/new-releases",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          market: "US",
+        },
+      }
+    );
+
+    return response.data.albums.items;
+  } catch (error) {
+    console.error(
+      "Error fetching new releases from spotify",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Failed to retrieve New Releases");
+  }
+};
+
 module.exports = {
   searchSpotifyAlbums,
   searchSpotifyArtists,
   getTopAlbumsByArtistSpotify,
+  getNewReleases,
 };

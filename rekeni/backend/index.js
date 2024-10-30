@@ -16,6 +16,7 @@ const reviewRoute = require("./routes/reviews");
 const searchRoutes = require("./routes/search");
 const searchSpotifyRoute = require("./routes/searchSpotifyAlbums");
 const discoverRoute = require("./routes/discover");
+const newReleasesRoute = require("./routes/newReleases");
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use("/api/review", reviewRoute); // Reviews routes
 app.use("/api/search", searchRoutes); // Search routes
 app.use("/api/searchAlbums", searchSpotifyRoute); // Search Spotify routes
 app.use("/api/discover", discoverRoute); // Discover new Route
+app.use("/api/newReleases", newReleasesRoute); //new releases route
 
 // Start the server
 const PORT = process.env.PORT || 5000;
