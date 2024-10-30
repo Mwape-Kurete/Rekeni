@@ -21,7 +21,7 @@ const getSimilarArtists = async (artistName) => {
   }
 };
 
-//Function search for albums
+// Function to search for albums by title
 const getSearchedAlbum = async (albumTitle) => {
   try {
     const response = await axios.get(BASE_URL, {
@@ -33,7 +33,6 @@ const getSearchedAlbum = async (albumTitle) => {
       },
     });
 
-    //return a list of the albums from the search
     return response.data.results.albummatches.album;
   } catch (error) {
     console.error("Error fetching albums from Last.fm:", error);
@@ -41,4 +40,23 @@ const getSearchedAlbum = async (albumTitle) => {
   }
 };
 
-module.exports = { getSimilarArtists, getSearchedAlbum };
+// New Function: Get albums by artist name from Last.fm
+const getAlbumsByArtist = async (artistName) => {
+  try {
+    const response = await axios.get(BASE_URL, {
+      params: {
+        method: "artist.getTopAlbums",
+        artist: artistName,
+        api_key: LASTFM_API_KEY,
+        format: "json",
+      },
+    });
+
+    return response.data.topalbums.album; // Return top albums by artist
+  } catch (error) {
+    console.error("Error fetching albums by artist from Last.fm:", error);
+    return [];
+  }
+};
+
+module.exports = { getSimilarArtists, getSearchedAlbum, getAlbumsByArtist };

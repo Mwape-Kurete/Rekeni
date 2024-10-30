@@ -1,7 +1,17 @@
 const axios = require("axios");
 
 const getSpotifyAccessToken = async () => {
+  console.log(
+    "Client ID:",
+    process.env.SPOTIFY_CLIENT_ID ? "Loaded" : "Missing"
+  );
+  console.log(
+    "Client Secret:",
+    process.env.SPOTIFY_CLIENT_SECRET ? "Loaded" : "Missing"
+  );
+
   try {
+    //requesting token
     const response = await axios.post(
       "https://accounts.spotify.com/api/token",
       new URLSearchParams({
@@ -20,9 +30,13 @@ const getSpotifyAccessToken = async () => {
         },
       }
     );
+    console.log("Token received:", response.data.access_token); // Log the token for debugging
     return response.data.access_token;
   } catch (error) {
-    console.error("Error fetching Spotify access token:", error);
+    console.error(
+      "Error fetching Spotify access token:",
+      error.response ? error.response.data : error.message
+    );
     throw new Error("Failed to fetch Spotify access token");
   }
 };

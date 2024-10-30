@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -13,6 +15,7 @@ const recommendationRoutes = require("./routes/recommendations");
 const reviewRoute = require("./routes/reviews");
 const searchRoutes = require("./routes/search");
 const searchSpotifyRoute = require("./routes/searchSpotifyAlbums");
+const discoverRoute = require("./routes/discover");
 
 dotenv.config();
 
@@ -44,6 +47,7 @@ app.use("/api/recommendations", recommendationRoutes); // Recommendation routes
 app.use("/api/review", reviewRoute); // Reviews routes
 app.use("/api/search", searchRoutes); // Search routes
 app.use("/api/searchAlbums", searchSpotifyRoute); // Search Spotify routes
+app.use("/api/discover", discoverRoute); // Discover new Route
 
 // Start the server
 const PORT = process.env.PORT || 5000;
