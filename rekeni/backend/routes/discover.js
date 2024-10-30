@@ -2,35 +2,43 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  getSimilarSpotify,
-  getSimilarLastFM,
-  getSimilarTasteDive,
+  getArtistRecommendationsSpotify,
+  getArtistRecommendationsLastFM,
+  getSimilarArtistsTasteDive,
 } = require("../services/recommendationService");
 
 router.get("/", async (req, res) => {
-  const { albumQuery } = req.query;
+  const { artistQuery } = req.query;
 
-  if (!albumQuery) {
+  if (!artistQuery) {
     return res
       .status(400)
-      .json({ error: "Album query is required for discovery" });
+      .json({ error: "Artist query is required for discovery" });
   }
 
   try {
-    // Fetch recommendations from each service
-    const spotifyRecommendations = await getSimilarSpotify(albumQuery);
-    const lastFMRecommendations = await getSimilarLastFM(albumQuery);
-    const tasteDiveRecommendations = await getSimilarTasteDive(albumQuery); // now returns album data
+    // Fetch similar artists and their top albums from each API
+    const spotifyRecommendations = await getArtistRecommendationsSpotify(
+      artistQuery
+    );
+    const lastFMRecommendations = await getArtistRecommendationsLastFM(
+      artistQuery
+    );
+    const tasteDiveRecommendations = await getSimilarArtistsTasteDive(
+      artistQuery
+    );
 
-    // Combine results and filter out duplicates by album title
+    // Combine all results and merge unique artists by name
     const allRecommendations = [
       ...spotifyRecommendations,
       ...lastFMRecommendations,
       ...tasteDiveRecommendations,
     ];
+
+    // Remove duplicates by artist name
     const uniqueRecommendations = allRecommendations.filter(
-      (album, index, self) =>
-        index === self.findIndex((a) => a.title === album.title)
+      (artist, index, self) =>
+        index === self.findIndex((a) => a.artist === artist.artist)
     );
 
     res.status(200).json(uniqueRecommendations);

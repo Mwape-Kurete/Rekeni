@@ -25,4 +25,92 @@ const searchSpotifyAlbums = async (albumQuery) => {
   }
 };
 
-module.exports = { searchSpotifyAlbums };
+const searchSpotifyArtists = async (artistQuery) => {
+  const accessToken = await getSpotifyAccessToken();
+  console.log("Spotify Access Token", accessToken);
+
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        q: artistQuery,
+        type: "artist",
+      },
+    });
+    return response.data.artists.items;
+  } catch (error) {
+    console.error(
+      "Error searching Spotify artists:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Failed to search Spotify artists");
+  }
+};
+
+const getTopAlbumsByArtistSpotify = async (artistName) => {
+  const accessToken = await getSpotifyAccessToken();
+  console.log("Spotify Access Token", accessToken);
+
+  try {
+    // Search for the artist by name to get their ID
+    const artistSearchResponse = await axios.get(
+      "https://api.spotify.com/v1/search",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          q: artistName,
+          type: "artist",
+          limit: 1, // Only need the first result
+        },
+      }
+    );
+
+    const artist = artistSearchResponse.data.artists.items[0];
+    if (!artist) {
+      console.log(`Artist ${artistName} not found on Spotify`);
+      return [];
+    }
+    const artistId = artist.id;
+
+    // Fetch albums by artist ID
+    const albumResponse = await axios.get(
+      `https://api.spotify.com/v1/artists/${artistId}/albums`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          include_groups: "album", // Only fetch full albums, not singles or compilations
+          market: "US",
+          limit: 5, // Adjust as needed for the number of albums
+        },
+      }
+    );
+
+    // Extract and return relevant album data
+    const topAlbums = albumResponse.data.items.map((album) => ({
+      title: album.name,
+      releaseDate: album.release_date,
+      albumUrl: album.external_urls.spotify,
+      artwork: album.images[0]?.url,
+    }));
+
+    return topAlbums;
+  } catch (error) {
+    console.error(
+      "Error fetching top albums by artist from Spotify:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error("Failed to fetch top albums by artist on Spotify");
+  }
+};
+
+module.exports = {
+  searchSpotifyAlbums,
+  searchSpotifyArtists,
+  getTopAlbumsByArtistSpotify,
+};

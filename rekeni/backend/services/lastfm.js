@@ -3,7 +3,7 @@ const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
 // Function to get similar artists from Last.fm based on a favorite artist
-const getSimilarArtists = async (artistName) => {
+const getSimilarArtistsLastFm = async (artistName) => {
   try {
     const response = await axios.get(BASE_URL, {
       params: {
@@ -59,4 +59,8 @@ const getAlbumsByArtist = async (artistName) => {
   }
 };
 
-module.exports = { getSimilarArtists, getSearchedAlbum, getAlbumsByArtist };
+module.exports = {
+  getSimilarArtistsLastFm,
+  getSearchedAlbum,
+  getAlbumsByArtist,
+};
