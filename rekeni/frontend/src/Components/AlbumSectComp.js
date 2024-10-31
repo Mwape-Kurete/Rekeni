@@ -39,16 +39,15 @@ function AlbumSectComp() {
             />
           </div>
           <div className="flex-column albs-action">
-            <div className="albs-meta">
+            <div className="albs-meta px-2 py-3">
               <h2 className="album-title">
-                Selected Album:
                 <span className="single-album-name"> Album Name</span>
               </h2>
               <h5 className="artist-title">
-                Artist: <span className="single-artist-name">Artist Name</span>
+                By: <span className="single-artist-name">Artist Name</span>
               </h5>
               <p className="year-title">
-                Release Year: <span className="single-year">0000</span>
+                Released: <span className="single-year">0000</span>
               </p>
             </div>
             <div className="leave-review">
@@ -85,12 +84,15 @@ function AlbumSectComp() {
                         onChange={(e) => setComment(e.target.value)}
                       />
                     </Form.Group>
-                    <Button variant="primary" type="submit" className="mt-2">
+                    <Button type="submit" className="mt-2 submitReviewBTN">
                       Submit
                     </Button>
                   </Form>
                 </Modal.Body>
               </Modal>
+            </div>
+            <div className="d-flex favsBTNcont">
+              <Button className="mb-3 addToFavs">Add To Your Favourites</Button>
             </div>
           </div>
         </Col>

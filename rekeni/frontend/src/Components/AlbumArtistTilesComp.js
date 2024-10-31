@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/album-tile.css"; // Make sure to create and style this CSS file
 
-function AlbumArtistTileComp() {
+function AlbumArtistTilesComp() {
   const handleRemove = () => {
     console.log("Card removed");
     // Add logic to remove or close the card here
@@ -12,6 +12,10 @@ function AlbumArtistTileComp() {
   return (
     <Card className="custom-card">
       <Card.Img src={placeholderImg} alt="Album cover" className="card-img" />
+      <Card.Body className="albumTile-meta" hidden>
+        <Card.Title>Album Title</Card.Title>
+        <Card.Text>By: artist</Card.Text>
+      </Card.Body>
       <Button
         variant="light"
         className="close-btn"
@@ -24,4 +28,4 @@ function AlbumArtistTileComp() {
   );
 }
 
-export default AlbumArtistTileComp;
+export default AlbumArtistTilesComp;

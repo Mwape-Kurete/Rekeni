@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, required: true },
   password: { type: String, required: true }, // Store hashed password
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }], // User's favorite albums
+  liked: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }], // Store's Users general liked albums
   playHistory: [{ albumId: String, timestamp: Date }], // User's listening history
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 });

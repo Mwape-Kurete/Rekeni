@@ -6,7 +6,7 @@ import "../Styles/ComponentStyles/ratings-card.css";
 function RatingsCardComp() {
   return (
     <Container className="whole-rating-cont d-flex justify-content-center align-items-center">
-      <Row className="ratings-box">
+      <Row className="ratings-box my-4">
         <Col xs={12} className="single-rating-box py-3">
           <Row className="rating-layout">
             <Col xs={4} className="album-cover">

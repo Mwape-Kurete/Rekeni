@@ -5,14 +5,22 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { UserContext } from "../Services/UserContext";
 
 import "../Styles/ComponentStyles/navbar.css";
 
 function NavbarComp() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
+  //const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    setUser(null); // Clear the user state
+    localStorage.removeItem("user"); // Clear any stored user data in localStorage
+    localStorage.removeItem("userId"); // Remove the user ID if stored separately
+  };
 
   return (
     <Container fluid>
@@ -44,14 +52,19 @@ function NavbarComp() {
             </Form>
           </Nav>
           <Nav className="me-auto">
-            {user.userId ? (
+            {user ? (
               // fragment for multipleelements inside a single conditional branch
               <>
                 <Nav.Link className="nav-text" as={Link} to="/profile">
                   Profile
                 </Nav.Link>
 
-                <Nav.Link className="nav-text" as={Link} to="/login">
+                <Nav.Link
+                  className="nav-text"
+                  onClick={logoutHandler}
+                  as={Link}
+                  to="/login"
+                >
                   LOGOUT
                 </Nav.Link>
               </>

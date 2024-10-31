@@ -64,7 +64,7 @@ function ReviewCardComp() {
               <Button className="like-button">
                 <i className="bi bi-heart-fill custom-color"></i>
               </Button>
-              <p className="no-likes">
+              <p className="no-likes py-1">
                 <span>0</span> Likes
               </p>
             </Col>
