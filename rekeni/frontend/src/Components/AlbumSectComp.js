@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Button, Form, Modal } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/single-album-comp.css";
+import "../Styles/ComponentStyles/album-tile.css";
 
 function AlbumSectComp() {
   const [comment, setComment] = useState("");

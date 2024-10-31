@@ -53,4 +53,17 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve user data" });
+  }
+});
+
 module.exports = router;

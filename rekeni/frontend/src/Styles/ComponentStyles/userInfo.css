@@ -12,13 +12,13 @@
   margin-top: 1%;
 }
 
-h1.username {
+h2.username {
   color: #fff;
   text-align: center;
   font-family: Modak;
-  font-size: 24px;
+  font-size: 36px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 
   display: flex;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
-import "../Styles/ComponentStyles/album-tile.css"; // Make sure to create and style this CSS file
+import "../Styles/ComponentStyles/album-tile.css";
 
 function AlbumArtistTilesComp() {
   const handleRemove = () => {
