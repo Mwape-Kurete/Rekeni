@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
@@ -7,9 +7,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
+import { UserContext } from "../Services/UserContext";
+
 import "../Styles/ComponentStyles/navbar.css";
 
 function NavbarComp() {
+  const { user } = useContext(UserContext);
+
   return (
     <Container fluid>
       <Navbar collapseOnSelect expand="lg" className="navbar-full-cont">
@@ -40,12 +44,22 @@ function NavbarComp() {
             </Form>
           </Nav>
           <Nav className="me-auto">
-            <Nav.Link className="nav-text" as={Link} to="/login">
-              LOGIN
-            </Nav.Link>
-            <Nav.Link className="nav-text" as={Link} to="/profile">
-              Profile
-            </Nav.Link>
+            {user.userId ? (
+              // fragment for multipleelements inside a single conditional branch
+              <>
+                <Nav.Link className="nav-text" as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
+
+                <Nav.Link className="nav-text" as={Link} to="/login">
+                  LOGOUT
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link className="nav-text" as={Link} to="/login">
+                LOGIN
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,10 +6,13 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import { UserContext } from "../Services/UserContext";
+
 import "../Styles/ComponentStyles/LoginformComp.css";
 
 function LoginFormComp() {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext) || {};
   const [error, setError] = useState({});
   const [validated, setValidated] = useState(false);
 
@@ -62,8 +65,11 @@ function LoginFormComp() {
         password,
       });
       if (response.status === 200) {
-        const userId = response.data.user.userId;
-        localStorage.setItem("userId", userId); // saving the user ID
+        const user = response.data.user;
+
+        setUser(user);
+        console.log(user);
+        //localStorage.setItem("userId", user); // saving the user ID
         navigate("/");
       }
     } catch (error) {
