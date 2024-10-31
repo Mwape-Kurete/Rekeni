@@ -61,7 +61,9 @@ function LoginFormComp() {
         email,
         password,
       });
-      if (response.status === 201) {
+      if (response.status === 200) {
+        const userId = response.data.user.userId;
+        localStorage.setItem("userId", userId); // saving the user ID
         navigate("/");
       }
     } catch (error) {

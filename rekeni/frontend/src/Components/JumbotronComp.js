@@ -13,8 +13,8 @@ function JumbotronComp() {
         <Col>
           <p className="jumbo-copy d-flex justify-content-start">
             Discover the heartbeat of music that resonates with your soul. Share
-            your favorites, explore new sounds, and connect with friends through
-            reviews and recommendations – all with Rekeni.
+            your favourites, explore new sounds, and connect with friends
+            through reviews and recommendations – all with Rekeni.
           </p>
         </Col>
       </Row>
