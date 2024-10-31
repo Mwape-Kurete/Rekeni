@@ -11,7 +11,7 @@
 }
 
 .signup-form-container {
-  height: 728px;
+  height: 758px;
   padding: 80px;
   margin-top: 30px;
   margin-bottom: 150px;
@@ -36,6 +36,16 @@
 
 .form-text.sub-text {
   color: #e9e94e;
+  margin-top: 10px;
+  font-family: "Montserrat Alternates";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.form-text.sub-text-error {
+  color: #d83b3b;
   margin-top: 10px;
   font-family: "Montserrat Alternates";
   font-size: 12px;

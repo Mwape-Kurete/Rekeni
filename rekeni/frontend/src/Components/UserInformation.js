@@ -10,13 +10,6 @@ function UserInformation() {
   return (
     <Container>
       <Row className="pfp-name d-flex justify-content-center align-items-center">
-        <Col xs={2}>
-          <img
-            className="profile-pic-profpg"
-            src={placeholderImg}
-            alt="users profile photo"
-          />
-        </Col>
         <Col xs={4} className="user-info">
           <h1 className="username">
             @<span>username</span>

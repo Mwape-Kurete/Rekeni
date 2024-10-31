@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Register new user
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, bio, password } = req.body;
 
   try {
     // Check if user already exists
@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
     }
 
     // Create and save new user
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ username, email, bio, password });
     await newUser.save();
 
     res.status(201).json({
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      user: { username: user.username, email: user.email },
+      user: { userId: user._id, username: user.username, email: user.email },
     });
   } catch (error) {
     res.status(500).json({ error: "Failed to login" });
