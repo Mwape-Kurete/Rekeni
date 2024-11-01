@@ -6,42 +6,30 @@ import Card from "react-bootstrap/Card";
 import "../Styles/ComponentStyles/search-results.css";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
-function SearchResultComp() {
+function SearchResultComp({ searchResults }) {
   return (
-    <>
-      <Row className="results-search-contain">
-        <Col className="result-col col-3 d-flex align-content-center">
+    <Row className="results-search-contain">
+      {searchResults.map((album, index) => (
+        <Col
+          key={index}
+          className="result-col col-3 d-flex align-content-center"
+        >
           <div className="img-sml">
             <img
               className="result-img-search"
-              src={placeholderImg}
-              alt="Rendered Album from resluts"
+              src={album.artworkUrl || placeholderImg}
+              alt={`Album artwork for ${album.title}`}
             />
           </div>
           <div className="album-meta-res">
-            <h5 className="title">Albulm Title</h5>
-            <h6 className="name">Artist Name</h6>
+            <h5 className="title">{album.title}</h5>
+            <h6 className="name">{album.artist}</h6>
             <br />
-            <p className="year">Release Year: 0000</p>
+            <p className="year">Release Year: {album.releaseDate || "N/A"}</p>
           </div>
         </Col>
-        <Col className="result-col col-3 d-flex align-content-center">
-          <div className="img-sml">
-            <img
-              className="result-img-search"
-              src={placeholderImg}
-              alt="Rendered Album from resluts"
-            />
-          </div>
-          <div className="album-meta-res">
-            <h5 className="title">Albulm Title</h5>
-            <h6 className="name">Artist Name</h6>
-            <br />
-            <p className="year">Release Year: 0000</p>
-          </div>
-        </Col>
-      </Row>
-    </>
+      ))}
+    </Row>
   );
 }
 

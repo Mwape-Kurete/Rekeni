@@ -54,7 +54,7 @@ function NavbarComp() {
             >
               <Form.Control
                 type="search"
-                placeholder="Search"
+                placeholder="Search for an album"
                 className="me-2 search-form"
                 aria-label="Search"
                 value={searchQuery}
