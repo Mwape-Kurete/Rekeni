@@ -14,7 +14,10 @@ router.get("/:albumId", async (req, res) => {
   }
 
   try {
-    const singleAlbum = await Album.findById(albumId).populate("reviews"); // Populating reviews if needed
+    // Query by spotifyId instead of _id
+    const singleAlbum = await Album.findOne({ spotifyId: albumId }).populate(
+      "reviews"
+    );
 
     if (!singleAlbum) {
       return res.status(404).json({ error: "Album not found" });
@@ -22,7 +25,7 @@ router.get("/:albumId", async (req, res) => {
     res.json(singleAlbum);
   } catch (error) {
     console.error(error); // Log the actual error for debugging
-    res.status(500).json({ error: "Failed to retrieve album data" }); // Updated error message
+    res.status(500).json({ error: "Failed to retrieve album data" });
   }
 });
 

@@ -7,12 +7,14 @@
   padding: 15px 15px;
   border-radius: 15px;
 
-  margin: 50px;
+  margin: 10px;
+  margin-top: 0;
 }
 
 .result-col {
   padding: 5px;
-  width: 468px !important;
+  padding-left: 40px;
+  width: 680px !important;
   height: 172px !important;
 
   /*background colopr*/

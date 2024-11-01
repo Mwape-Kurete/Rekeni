@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import "../Styles/ComponentStyles/search-results.css";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
-function SearchResultComp({ albums, onSelectAlbum }) {
+function SearchResultComp({ albums = [], onSelectAlbum }) {
   return (
     <Row className="results-search-contain">
       {albums.length ? (
@@ -30,7 +30,7 @@ function SearchResultComp({ albums, onSelectAlbum }) {
           </Col>
         ))
       ) : (
-        <p>No albums found.</p>
+        <p>Loading...</p>
       )}
     </Row>
   );

@@ -9,6 +9,7 @@ const {
 
 router.get("/", async (req, res) => {
   const { artistQuery } = req.query;
+  console.log("Recieved artist: ", artistQuery);
 
   if (!artistQuery) {
     return res
@@ -18,21 +19,19 @@ router.get("/", async (req, res) => {
 
   try {
     // Fetch similar artists and their top albums from each API
-    const spotifyRecommendations = await getArtistRecommendationsSpotify(
-      artistQuery
-    );
-    const lastFMRecommendations = await getArtistRecommendationsLastFM(
-      artistQuery
-    );
-    const tasteDiveRecommendations = await getSimilarArtistsTasteDive(
-      artistQuery
+    const [spotifyResults, lastFMResults, tasteDiveResults] = await Promise.all(
+      [
+        getArtistRecommendationsSpotify(artistQuery),
+        getArtistRecommendationsLastFM(artistQuery),
+        getSimilarArtistsTasteDive(artistQuery),
+      ]
     );
 
     // Combine all results and merge unique artists by name
     const allRecommendations = [
-      ...spotifyRecommendations,
-      ...lastFMRecommendations,
-      ...tasteDiveRecommendations,
+      ...spotifyResults,
+      ...lastFMResults,
+      ...tasteDiveResults,
     ];
 
     // Remove duplicates by artist name

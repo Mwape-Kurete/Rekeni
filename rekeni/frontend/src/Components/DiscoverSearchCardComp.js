@@ -1,12 +1,21 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
 import "../Styles/ComponentStyles/ai-search-sect.css";
 
-function DiscoverSearchCardComp() {
+function DiscoverSearchCardComp({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchTerm);
+  };
+
   return (
     <div className="ai-whole-container d-flex justify-content-center align-items-center entire-search">
       <Row className="ai-containter">
@@ -16,19 +25,29 @@ function DiscoverSearchCardComp() {
         >
           <div>
             <h1 className="discover-ask-title text-align-center">
-              Ask Rekeni A.I for album recommendations
+              Ask Rekeni for artist and album recommendations
             </h1>
+            <p className="discover-promt">
+              Start off by searching for an artist you really love!
+            </p>
           </div>
         </Col>
         <Col xs={12}>
-          <Form className="d-flex justify-content-center align-items-center entire-search-discover">
+          <Form
+            onSubmit={handleSubmit}
+            className="d-flex justify-content-center align-items-center entire-search-discover"
+          >
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2 search-form search-discover"
               aria-label="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
-            <Button className="search-discover-button">Search</Button>
+            <Button type="submit" className="search-discover-button">
+              Search
+            </Button>
           </Form>
         </Col>
       </Row>

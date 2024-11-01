@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Row, Col, Button, Form, Modal } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/single-album-comp.css";
 import "../Styles/ComponentStyles/album-tile.css";
 
-function AlbumSectComp() {
+import { UserContext } from "../Services/UserContext";
+
+function AlbumSectComp({ singleAlbum }) {
+  const { user } = useContext(UserContext);
+
+  console.log(singleAlbum);
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -34,67 +40,79 @@ function AlbumSectComp() {
         <Col className="albs-info d-flex">
           <div className="albs-img-cont">
             <img
-              src={placeholderImg}
-              alt="single album cover"
+              src={singleAlbum.artworkUrl || placeholderImg}
+              alt={`${singleAlbum.title || "Album"} album cover`}
               className="single-albs-cover"
             />
           </div>
           <div className="flex-column albs-action">
             <div className="albs-meta px-2 py-3">
               <h2 className="album-title">
-                <span className="single-album-name"> Album Name</span>
+                <span className="single-album-name"> {singleAlbum.title}</span>
               </h2>
               <h5 className="artist-title">
-                By: <span className="single-artist-name">Artist Name</span>
+                By:{" "}
+                <span className="single-artist-name">{singleAlbum.artist}</span>
               </h5>
               <p className="year-title">
-                Released: <span className="single-year">0000</span>
+                Released:{" "}
+                <span className="single-year">{singleAlbum.releaseDate}</span>
               </p>
             </div>
-            <div className="leave-review">
-              {/* Button to show the review modal */}
-              <Button onClick={handleShow} className="mb-3 leave-reviewBTN">
-                Leave Your Review
-              </Button>
+            {user ? (
+              <>
+                <div className="leave-review">
+                  {/* Button to show the review modal */}
+                  <Button onClick={handleShow} className="mb-3 leave-reviewBTN">
+                    Leave Your Review
+                  </Button>
 
-              {/* Review Modal */}
-              <Modal show={showModal} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                  <Modal.Title>Leave a Review</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group>
-                      <div className="d-flex align-items-center stars-rating">
-                        {/* Filled Stars (for a rating of 3 out of 5) */}
-                        <i className="bi bi-star-fill text-warning rating-stars"></i>
-                        <i className="bi bi-star-fill text-warning rating-stars"></i>
-                        <i className="bi bi-star-fill text-warning rating-stars"></i>
-                        {/* Unfilled Stars */}
-                        <i className="bi bi-star-fill rating-stars"></i>
-                        <i className="bi bi-star-fill rating-stars"></i>
-                        {/* end of rating section */}
-                      </div>
-                    </Form.Group>
-                    <Form.Group controlId="commentBox">
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        placeholder="Write your review..."
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
-                    </Form.Group>
-                    <Button type="submit" className="mt-2 submitReviewBTN">
-                      Submit
-                    </Button>
-                  </Form>
-                </Modal.Body>
-              </Modal>
-            </div>
-            <div className="d-flex favsBTNcont">
-              <Button className="mb-3 addToFavs">Add To Your Favourites</Button>
-            </div>
+                  {/* Review Modal */}
+                  <Modal show={showModal} onHide={handleClose} centered>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Leave a Review</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                          <div className="d-flex align-items-center stars-rating">
+                            {/* Filled Stars (for a rating of 3 out of 5) */}
+                            <i className="bi bi-star-fill text-warning rating-stars"></i>
+                            <i className="bi bi-star-fill text-warning rating-stars"></i>
+                            <i className="bi bi-star-fill text-warning rating-stars"></i>
+                            {/* Unfilled Stars */}
+                            <i className="bi bi-star-fill rating-stars"></i>
+                            <i className="bi bi-star-fill rating-stars"></i>
+                            {/* end of rating section */}
+                          </div>
+                        </Form.Group>
+                        <Form.Group controlId="commentBox">
+                          <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Write your review..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                          />
+                        </Form.Group>
+                        <Button type="submit" className="mt-2 submitReviewBTN">
+                          Submit
+                        </Button>
+                      </Form>
+                    </Modal.Body>
+                  </Modal>
+                </div>
+                <div className="d-flex favsBTNcont">
+                  <Button className="mb-3 addToFavs">
+                    Add To Your Favourites
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="login-prompt text-center">
+                <h6>Login or Create an Account to Leave a Review & More</h6>
+              </div>
+            )}
           </div>
         </Col>
         <Col className="col-4">
