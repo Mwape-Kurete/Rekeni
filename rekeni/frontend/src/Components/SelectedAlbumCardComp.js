@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/selected-album-card.css";
 
-function SelectedAlbumCardComp() {
+function SelectedAlbumCardComp({ album }) {
   return (
     <div className="selected-whole-contain d-flex justify-content-center align-items-center">
       <Row className="selected-containter">
@@ -13,19 +13,24 @@ function SelectedAlbumCardComp() {
             <div className="image">
               <img
                 className="select-alb-cover-img"
-                src={placeholderImg}
-                alt="selected album cover"
+                src={album.images[1]?.url || placeholderImg}
+                alt={`${album.name} album cover`}
               />
             </div>
             <div className="selected-alb-info">
-              <h2 className="album-title text-center">
-                Selected Album: <span className="select-album">Album Name</span>
-              </h2>
+              <h4 className="album-title text-center">
+                Selected Album:{" "}
+                <span className="select-album">{album.name}</span>
+              </h4>
               <h5 className="artist-title">
-                Artist: <span className="select-artist-name">Artist Name</span>
+                Artist:{" "}
+                <span className="select-artist-name">
+                  {album.artists.map((artist) => artist.name).join(", ")}
+                </span>
               </h5>
               <p className="year-title">
-                Release Year: <span className="select-artist-name">0000</span>
+                Release Year:{" "}
+                <span className="select-artist-name">{album.release_date}</span>
               </p>
             </div>
           </div>

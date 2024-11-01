@@ -14,21 +14,23 @@ import "../Styles/main.css";
 
 function SearchGen() {
   const location = useLocation();
-  const [searchResults, setSearchResults] = useState([]);
+  const [albums, setAlbums] = useState([]);
   const query = new URLSearchParams(location.search).get("query");
 
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+
   useEffect(() => {
-    const fetchSearchResults = async () => {
+    const fetchAlbums = async () => {
       try {
         const response = await axios.get(`/api/searchAlbums?query=${query}`);
-        setSearchResults(response.data);
+        setAlbums(response.data);
       } catch (error) {
         console.error("Error Fetching search results: ", error);
       }
     };
 
     if (query) {
-      fetchSearchResults();
+      fetchAlbums();
     }
   }, [query]);
 
@@ -39,14 +41,14 @@ function SearchGen() {
           <NavbarComp />
         </Col>
       </Row>
-      <Row className="album-populate">
+      <Row className="album-populate d-flex justify-content-center align-items-center">
         <Col xs={12} className="expand-album-gen">
-          <SearchResultComp searchResults={searchResults} />
+          <SearchResultComp albums={albums} onSelectAlbum={setSelectedAlbum} />
         </Col>
       </Row>
       <Row className="discover-search-cent">
         <Col xs={12} className="discover-sect-card">
-          <SelectedAlbumCardComp />
+          {selectedAlbum && <SelectedAlbumCardComp album={selectedAlbum} />}
         </Col>
       </Row>
     </Container>

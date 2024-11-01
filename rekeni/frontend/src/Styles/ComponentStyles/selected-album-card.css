@@ -25,15 +25,15 @@
 
 .select-alb-cover-img {
   display: inline-flex;
-  width: 304px;
-  height: 304px;
+  width: 254px;
+  height: 254px;
   flex-shrink: 0;
   border-radius: 18px;
 }
 .selected-alb-info {
   display: block;
   margin-top: 10%;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .select-meta {
@@ -46,9 +46,9 @@
 }
 
 .go-to-review {
-  margin-top: 20%;
-  width: 474px;
-  height: 246.707px;
+  margin-top: 30%;
+  width: 374px;
+  height: 146.707px;
   flex-shrink: 0;
 
   border-radius: 25px;
@@ -73,19 +73,27 @@ h5.prompt {
 }
 
 .btn-reviewCTA {
-  width: 396px;
-  height: 53px;
+  width: 196px;
+  height: 45px;
   border-radius: 20px !important;
   background: #f76910 !important;
   border: none !important;
   padding-bottom: 0;
   margin-bottom: 0;
 
-  color: #fff;
+  color: white !important;
   text-align: center;
   font-family: "Montserrat Alternates" !important;
   font-size: 20px !important;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 600 !important;
   line-height: normal;
+}
+
+.btn-reviewCTA:hover {
+  background: linear-gradient(
+    180deg,
+    #f77d3a -51.65%,
+    #e3333d 76.86%
+  ) !important;
 }

@@ -12,7 +12,7 @@
 
 .result-col {
   padding: 5px;
-  width: 368px !important;
+  width: 468px !important;
   height: 172px !important;
 
   /*background colopr*/
@@ -23,6 +23,10 @@
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
 
   margin: 10px;
+}
+
+.result-col:hover {
+  cursor: pointer;
 }
 
 div.img-sml {
