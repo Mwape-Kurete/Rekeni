@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
@@ -13,13 +13,22 @@ import "../Styles/ComponentStyles/navbar.css";
 
 function NavbarComp() {
   const { user, setUser } = useContext(UserContext);
-
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(""); //for storing the users search
 
   const logoutHandler = () => {
     setUser(null); // Clear the user state
     localStorage.removeItem("user"); // Clear any stored user data in localStorage
     localStorage.removeItem("userId"); // Remove the user ID if stored separately
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery) {
+      console.log(searchQuery);
+
+      navigate(`/searchGen?query=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
@@ -39,14 +48,19 @@ function NavbarComp() {
             </Nav.Link>
           </Nav>
           <Nav className="me-auto">
-            <Form className="d-flex justify-content-center align-items-center entire-search">
+            <Form
+              className="d-flex justify-content-center align-items-center entire-search"
+              onSubmit={handleSearchSubmit}
+            >
               <Form.Control
                 type="search"
                 placeholder="Search"
                 className="me-2 search-form"
                 aria-label="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Button as={Link} to="/searchGen" className="search-gen">
+              <Button type="submit" className="search-gen">
                 Search
               </Button>
             </Form>
