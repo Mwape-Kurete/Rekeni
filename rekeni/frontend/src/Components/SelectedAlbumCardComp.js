@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/selected-album-card.css";
 
 function SelectedAlbumCardComp({ album }) {
+  const navigate = useNavigate();
+
+  const selectedToSingleHandler = () => {
+    console.log(album.id);
+
+    navigate(`/singleAlbum?query=${album.id}`);
+  };
+
   return (
     <div className="selected-whole-contain d-flex justify-content-center align-items-center">
       <Row className="selected-containter">
@@ -40,9 +48,13 @@ function SelectedAlbumCardComp({ album }) {
             <h5 className="prompt text-center">
               Have thoughts on the Album? Leave a review
             </h5>
-            <Link to="/singleAlbum" className="btn btn-reviewCTA">
+            <Button
+              to="/singleAlbum"
+              className="btn btn-reviewCTA"
+              onClick={selectedToSingleHandler}
+            >
               Review
-            </Link>
+            </Button>
           </div>
         </Col>
       </Row>
