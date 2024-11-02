@@ -107,7 +107,29 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding: 5%;
+  padding: 2%;
+}
+
+.editReviewBTN {
+  height: 35px;
+  text-align: center;
+  font-family: "Montserrat Alternates" !important;
+  font-size: 12px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: normal;
+  border: none !important;
+}
+
+.deleteReviewBTN {
+  height: 35px;
+  text-align: center;
+  font-family: "Montserrat Alternates" !important;
+  font-size: 12px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: normal;
+  border: none !important;
 }
 
 .avg-rating {
@@ -120,11 +142,9 @@
   padding: 5%;
 }
 
-.favsBTNcont {
-  margin-left: 23%;
-}
-
 .addToFavs {
+  margin-top: 25px;
+  width: 80%;
   border-radius: 20px !important;
   background: #e9e94e !important;
   color: black !important;
@@ -158,17 +178,9 @@
   width: 596px;
   border-radius: 25px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgb(255, 255, 255) !important;
 
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0.04) 0px 1px 1px -0.5px,
-    rgba(0, 0, 0, 0.04) 0px 3px 3px -1.5px, rgba(0, 0, 0, 0.04) 0px 6px 6px -3px,
-    rgba(0, 0, 0, 0.04) 0px 12px 12px -6px,
-    rgba(0, 0, 0, 0.04) 0px 24px 24px -12px;
-
-  color: #fff;
+  color: black !important;
   font-family: "Montserrat Alternates";
   font-size: 16px;
   font-style: normal;
@@ -178,6 +190,7 @@
 
 .submitReviewBTN {
   border-radius: 20px !important;
+  height: 40px;
   background: #f76910 !important;
   color: white !important;
   text-align: center;
@@ -191,24 +204,12 @@
 
 .submitReviewBTN:hover {
   border-radius: 20px !important;
+  height: 40px;
   background: linear-gradient(
     90deg,
     #e3333d -51.65%,
     #f77d3a 76.86%
   ) !important;
-  color: white !important;
-  text-align: center;
-  font-family: "Montserrat Alternates" !important;
-  font-size: 16px !important;
-  font-style: normal;
-  font-weight: 500 !important;
-  line-height: normal;
-  border: none !important;
-}
-
-.modal-header .btn-close {
-  color: white !important;
-  --bs-btn-close-color: white !important;
 }
 
 .login-prompt {

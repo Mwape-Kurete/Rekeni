@@ -10,12 +10,27 @@ import AlbumSectComp from "../Components/AlbumSectComp";
 import { Container, Row, Col } from "react-bootstrap";
 
 function SingleAlbumPage() {
+  //for loading single album
   const location = useLocation();
   const [singleAlbum, setSingleAlbum] = useState({ images: [] });
   const [isLoading, setIsLoading] = useState(true);
   const query = new URLSearchParams(location.search).get("query");
 
+  //for loading comments
+  const [allReviews, setAllReviews] = useState([]);
+  const albumId = new URLSearchParams(location.search).get("query");
+
   useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`/api/review/${albumId}`);
+
+        setAllReviews(response.data);
+      } catch (error) {
+        console.error("There was an error fetching reviews: ", error);
+      }
+    };
+
     const fetchSingleAlbum = async () => {
       try {
         const response = await axios.get(`/api/fetchAlbum/${query}`);
@@ -28,7 +43,8 @@ function SingleAlbumPage() {
       }
     };
     fetchSingleAlbum();
-  }, [query]);
+    fetchReviews();
+  }, [query, albumId]);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -48,7 +64,7 @@ function SingleAlbumPage() {
       </Row>
       <Row className="review-section-single">
         <Col xs={12} className="review-single-cont">
-          <ReviewCardComp />
+          <ReviewCardComp allReviews={allReviews} location={location} />
         </Col>
       </Row>
       <footer>

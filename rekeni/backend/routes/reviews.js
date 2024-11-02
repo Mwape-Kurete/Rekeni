@@ -12,6 +12,8 @@ router.post("/", async (req, res) => {
   }
 
   try {
+    console.log("Creating a new review...");
+
     const newReview = await Review.create({
       album: albumId,
       user: userId,
@@ -19,15 +21,18 @@ router.post("/", async (req, res) => {
       rating,
     });
 
+    console.log("Review created Successfully: ", newReview);
+
     res.status(201).json(newReview);
   } catch (error) {
+    console.error("Failed to create review: ", error);
+
     res
       .status(500)
       .json({ error: "Failed to create review", details: error.message });
   }
 });
 
-//Route to fetch all reviews
 // Route to get all reviews for an album
 router.get("/:albumId", async (req, res) => {
   const { albumId } = req.params;
@@ -49,6 +54,28 @@ router.get("/:albumId", async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to fetch reviews", details: error.message });
+  }
+});
+
+// Route to get a user's unique review for an album
+router.get("/:albumId/:userId", async (req, res) => {
+  const { albumId, userId } = req.params;
+
+  try {
+    const review = await Review.findOne({
+      album: albumId,
+      user: userId,
+    }).populate("user", "username");
+    if (!review) {
+      return res
+        .status(404)
+        .json({ message: "Review not found for this user and album" });
+    }
+    res.status(200).json(review);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch review", details: error.message });
   }
 });
 

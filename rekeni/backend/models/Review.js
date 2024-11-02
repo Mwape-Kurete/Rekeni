@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 // Review Schema
 const reviewSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   album: { type: mongoose.Schema.Types.ObjectId, ref: "Album", required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   content: {
     type: String,
     required: [true, "Review content is required"],
