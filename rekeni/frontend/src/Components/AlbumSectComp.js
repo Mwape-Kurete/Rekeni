@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Row, Col, Button, Form, Modal } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/single-album-comp.css";
 import "../Styles/ComponentStyles/album-tile.css";
+
+import axios from "axios";
 
 import { UserContext } from "../Services/UserContext";
 
@@ -11,26 +13,41 @@ function AlbumSectComp({ singleAlbum }) {
 
   console.log(singleAlbum);
 
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
+  const [newReview, setNewReview] = useState("");
+  const [allReviews, setAllReviews] = useState([]);
+  const [rating, setRating] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   // Toggle modal visibility
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(
+          `/api/review/${singleAlbum.spotifyId}`
+        );
+
+        setAllReviews(response.data);
+      } catch (error) {
+        console.error("There was an error fetching reviews ");
+      }
+    };
+  });
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Prevent submitting an empty comment
-    if (comment.trim() === "") {
+    if (newReview.trim() === "") {
       return;
     }
 
     // Add the new comment to the list
-    setComments([comment, ...comments]);
-    setComment(""); // Clear the input box
+    setAllReviews([newReview, ...allReviews]);
+    setNewReview(""); // Clear the input box
     handleClose(); // Close the modal after submission
   };
 
@@ -91,8 +108,8 @@ function AlbumSectComp({ singleAlbum }) {
                             as="textarea"
                             rows={3}
                             placeholder="Write your review..."
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
+                            value={newReview}
+                            onChange={(e) => setNewReview(e.target.value)}
                           />
                         </Form.Group>
                         <Button type="submit" className="mt-2 submitReviewBTN">
