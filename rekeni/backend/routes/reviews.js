@@ -79,8 +79,23 @@ router.get("/:albumId/:userId", async (req, res) => {
   }
 });
 
+const checkOwnership = async (req, res, next) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+    if (review.user.toString() !== req.user._id) {
+      return res.status(403).json({ error: "Unauthorized action" });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+};
+
 // Route to update a user's review
-router.put("/:reviewId", async (req, res) => {
+router.put("/:reviewId", checkOwnership, async (req, res) => {
   const { reviewId } = req.params;
   const { content, rating } = req.body;
 
@@ -109,7 +124,7 @@ router.put("/:reviewId", async (req, res) => {
 });
 
 // Route to delete a user's review
-router.delete("/:reviewId", async (req, res) => {
+router.delete("/:reviewId", checkOwnership, async (req, res) => {
   const { reviewId } = req.params;
 
   try {
@@ -124,6 +139,70 @@ router.delete("/:reviewId", async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to delete review", details: error.message });
+  }
+});
+
+// Route to like a review
+router.post("/:reviewId/like", async (req, res) => {
+  const { reviewId } = req.params;
+  const { userId } = req.body; // Assuming userId is passed in the request body
+
+  try {
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+
+    // Check if the user has already liked the review
+    if (review.likedBy.includes(userId)) {
+      return res
+        .status(400)
+        .json({ error: "User has already liked this review" });
+    }
+
+    // Add the user ID to the likedBy array and increment the likes count
+    review.likedBy.push(userId);
+    review.likes += 1;
+
+    await review.save();
+
+    res.status(200).json(review);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to like review", details: error.message });
+  }
+});
+
+// Route to unlike a review
+router.post("/:reviewId/unlike", async (req, res) => {
+  const { reviewId } = req.params;
+  const { userId } = req.body; // Assuming userId is passed in the request body
+
+  try {
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+
+    // Check if the user has not liked the review yet
+    if (!review.likedBy.includes(userId)) {
+      return res.status(400).json({ error: "User has not liked this review" });
+    }
+
+    // Remove the user ID from the likedBy array and decrement the likes count
+    review.likedBy = review.likedBy.filter((id) => id.toString() !== userId);
+    review.likes -= 1;
+
+    await review.save();
+
+    res.status(200).json(review);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to unlike review", details: error.message });
   }
 });
 

@@ -10,77 +10,100 @@ import "../Styles/ComponentStyles/reviewcard.css";
 
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
-function ReviewCardComp({ allReviews, loction }) {
+function ReviewCardComp({ allReviews }) {
   const location = useLocation();
 
   const isSingleAlbumPage = location.pathname.includes("singleAlbum");
-  const isProfile = location.pathname.includes("profile");
-  const isNew = location.pathname.includes("new");
-  const isHome = location.pathname.includes("/");
+  const isProfilePage = location.pathname.includes("profile");
+  const isHomePage = location.pathname === "/";
 
   return (
-    <Card className="review-card d-flex flex-row">
-      <Col className="col-6 d-flex align-items-center review-card-img-cont">
-        <Card.Img
-          variant="top"
-          src={placeholderImg}
-          className="review-card-img"
-        />
-      </Col>
-      <Col className="review-card-body col-6 d-flex align-items-center">
-        <Card.Body className="card-body-content-review">
-          <Card.Title className="album-title">Album Title</Card.Title>
-          {/* Rating Section */}
-          <div class="d-flex align-items-center stars-rating">
-            {/* Filled Stars (for a rating of 3 out of 5) */}
-            <i class="bi bi-star-fill text-warning rating-stars"></i>
-            <i class="bi bi-star-fill text-warning rating-stars"></i>
-            <i class="bi bi-star-fill text-warning rating-stars"></i>
-            {/* Unfilled Stars */}
-            <i class="bi bi-star-fill rating-stars"></i>
-            <i class="bi bi-star-fill rating-stars"></i>
-            <span
-              class="ms-2 written-rating
-            "
-            >
-              (3/5)
-            </span>
-          </div>
-          {/* End Of Rating Section */}
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+    <>
+      {allReviews.map((review) => (
+        <Card className="review-card d-flex flex-row mb-3" key={review._id}>
+          {/* Conditionally render the album cover only on non-single album pages */}
+          {!isSingleAlbumPage && (
+            <Col className="col-6 d-flex align-items-center review-card-img-cont">
+              <Card.Img
+                variant="top"
+                src={review.albumArtwork || placeholderImg}
+                className="review-card-img"
+              />
+            </Col>
+          )}
+          <Col
+            className={`review-card-body ${
+              isSingleAlbumPage ? "col-12" : "col-6"
+            } d-flex align-items-center`}
+          >
+            <Card.Body className="card-body-content-review">
+              <Card.Title className="album-title">
+                {review.albumTitle}
+              </Card.Title>
 
-          <Row className="user-information">
-            <Col className="username-handle">
-              <Card.Text>
-                <small>
-                  <span>@username</span>
-                </small>
-              </Card.Text>
-            </Col>
-            <Col className="timestamp-review d-flex justify-content-end">
-              <Card.Text>
-                <small>
-                  <span>00:00 01/01/2024</span>
-                </small>
-              </Card.Text>
-            </Col>
-          </Row>
-          <Row className="like-btn">
-            <Col className="col-12 d-flex justify-content-end">
-              <Button className="like-button">
-                <i className="bi bi-heart-fill custom-color"></i>
-              </Button>
-              <p className="no-likes py-1">
-                <span>0</span> Likes
-              </p>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Col>
-    </Card>
+              {/* Rating Section */}
+              <div className="d-flex align-items-center stars-rating">
+                {[...Array(5)].map((_, index) => (
+                  <i
+                    key={index}
+                    className={`bi ${
+                      index < review.rating
+                        ? "bi-star-fill text-warning"
+                        : "bi-star"
+                    } rating-stars`}
+                  ></i>
+                ))}
+                <span className="ms-2 written-rating">({review.rating}/5)</span>
+              </div>
+
+              <Card.Text>{review.content}</Card.Text>
+
+              {/* User information */}
+              <Row className="user-information">
+                <Col className="username-handle">
+                  <Card.Text>
+                    <small>
+                      <span>@{review.username}</span>
+                    </small>
+                  </Card.Text>
+                </Col>
+                <Col className="timestamp-review d-flex justify-content-end">
+                  <Card.Text>
+                    <small>
+                      <span>{new Date(review.createdAt).toLocaleString()}</span>
+                    </small>
+                  </Card.Text>
+                </Col>
+              </Row>
+
+              {/* Conditional actions for profile page */}
+              {isProfilePage && (
+                <Row className="mt-2">
+                  <Col className="d-flex justify-content-end">
+                    <Button variant="warning" className="me-2">
+                      Edit
+                    </Button>
+                    <Button variant="danger">Delete</Button>
+                  </Col>
+                </Row>
+              )}
+
+              {/* Like button */}
+              <Row className="like-btn">
+                <Col className="col-12 d-flex justify-content-end">
+                  <Button className="like-button">
+                    <i className="bi bi-heart-fill custom-color"></i>
+                  </Button>
+                  <p className="no-likes py-1">
+                    <span>{review.likes}</span> Likes
+                  </p>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Col>
+        </Card>
+      ))}
+    </>
   );
 }
 
