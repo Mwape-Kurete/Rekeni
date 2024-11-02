@@ -35,13 +35,9 @@ function Profile() {
       </Row>
       <div className="bottom-divider d-flex justify-content-center align-items-center">
         <Row className="user-ratings-reviews">
-          <Col xs={6}>
+          <Col xs={12}>
             <h1 className="user-reviews">Your Reviews</h1>
             <ReviewCardComp />
-          </Col>
-          <Col xs={6}>
-            <h1 className="user-ratings">Your Ratings</h1>
-            <RatingsCardComp />
           </Col>
         </Row>
       </div>
