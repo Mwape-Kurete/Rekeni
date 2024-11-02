@@ -4,11 +4,20 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
+import { useLocation } from "react-router-dom";
+
 import "../Styles/ComponentStyles/reviewcard.css";
 
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
-function ReviewCardComp() {
+function ReviewCardComp({ allReviews, loction }) {
+  const location = useLocation();
+
+  const isSingleAlbumPage = location.pathname.includes("singleAlbum");
+  const isProfile = location.pathname.includes("profile");
+  const isNew = location.pathname.includes("new");
+  const isHome = location.pathname.includes("/");
+
   return (
     <Card className="review-card d-flex flex-row">
       <Col className="col-6 d-flex align-items-center review-card-img-cont">
