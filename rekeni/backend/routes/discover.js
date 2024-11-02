@@ -9,7 +9,7 @@ const {
 
 router.get("/", async (req, res) => {
   const { artistQuery } = req.query;
-  console.log("Recieved artist: ", artistQuery);
+  console.log("Received artist: ", artistQuery);
 
   if (!artistQuery) {
     return res
@@ -18,7 +18,6 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    // Fetch similar artists and their top albums from each API
     const [spotifyResults, lastFMResults, tasteDiveResults] = await Promise.all(
       [
         getArtistRecommendationsSpotify(artistQuery),
@@ -27,20 +26,23 @@ router.get("/", async (req, res) => {
       ]
     );
 
-    // Combine all results and merge unique artists by name
-    const allRecommendations = [
+    // Combine and filter out results with empty topAlbums
+    let allRecommendations = [
       ...spotifyResults,
       ...lastFMResults,
       ...tasteDiveResults,
-    ];
+    ].filter((artist) => artist.topAlbums && artist.topAlbums.length > 0);
 
-    // Remove duplicates by artist name
-    const uniqueRecommendations = allRecommendations.filter(
-      (artist, index, self) =>
-        index === self.findIndex((a) => a.artist === artist.artist)
-    );
+    // Cap the number of top albums for each artist to 5
+    allRecommendations = allRecommendations.map((artist) => ({
+      ...artist,
+      topAlbums: artist.topAlbums.slice(0, 5),
+    }));
 
-    res.status(200).json(uniqueRecommendations);
+    // Limit the total number of artists to 25
+    const limitedRecommendations = allRecommendations.slice(0, 25);
+
+    res.status(200).json(limitedRecommendations);
   } catch (error) {
     console.error("Error fetching recommendations:", error);
     res.status(500).json({ error: "Failed to fetch recommendations" });

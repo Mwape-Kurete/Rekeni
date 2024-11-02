@@ -30,7 +30,7 @@ function New() {
         </Col>
         <Col xs={3} className="gy-3 new-albs-sect">
           <h1 className="recent-revs-header">Most Reviewed</h1>
-          <div className="d-flex justify-content-end new-albums">
+          <div className="d-flex justify-content-end new-albums mb-3">
             <NewAlbumCardComp />
           </div>
         </Col>

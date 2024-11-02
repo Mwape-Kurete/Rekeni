@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const timeout = require("connect-timeout"); // middleware timeout import
 
 console.log("Server is starting...");
 
@@ -23,6 +24,8 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+app.use(timeout("60s")); //60s timeout for all my routes
 
 // Enable CORS with default settings (allow all origins)
 app.use(cors());

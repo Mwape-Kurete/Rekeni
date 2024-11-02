@@ -11,11 +11,12 @@
   margin-top: 0;
 }
 
-.result-col {
+.result-col-discover {
+  margin: 0 auto;
   padding: 5px;
   padding-left: 40px;
-  width: 680px !important;
-  height: 172px !important;
+  width: 75% !important;
+  height: 200px !important;
 
   /*background colopr*/
   background: rgba(255, 255, 255, 0) !important;
@@ -25,10 +26,46 @@
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
 
   margin: 10px;
+
+  transition: all 1000ms;
+}
+
+.result-col {
+  padding: 5px;
+  padding-left: 40px;
+  width: 680px !important;
+  height: 172px !important;
+
+  /*background colour*/
+  background: rgba(255, 255, 255, 0) !important;
+  backdrop-filter: blur(7.5px) !important;
+  -webkit-backdrop-filter: blur(7.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+
+  margin: 10px;
+
+  transition: all 1000ms;
 }
 
 .result-col:hover {
   cursor: pointer;
+  /*background colour*/
+  background: rgba(255, 255, 255, 0.132) !important;
+  backdrop-filter: blur(10.5px) !important;
+  -webkit-backdrop-filter: blur(10.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.492) !important;
+}
+
+.result-col-discover:hover {
+  cursor: pointer;
+  /*background colour*/
+  background: rgba(255, 255, 255, 0.132) !important;
+  backdrop-filter: blur(10.5px) !important;
+  -webkit-backdrop-filter: blur(10.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.492) !important;
 }
 
 div.img-sml {
@@ -79,4 +116,24 @@ img.result-img-search {
   transform: scale(1.1);
   transition: transform 0.3s ease;
   cursor: pointer;
+}
+
+.modal-content {
+  /*background colour*/
+  background: rgba(255, 255, 255, 0.038) !important;
+  backdrop-filter: blur(10.5px) !important;
+  -webkit-backdrop-filter: blur(10.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #fff;
+}
+
+.modal-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 25px;
+}
+
+.modal-album-meta {
+  display: inline;
 }

@@ -7,7 +7,7 @@ import "../Styles/ComponentStyles/new-albums-card.css";
 
 function NewAlbumCardComp() {
   return (
-    <Container className="whole-new-album-cont d-flex justify-content-center align-items-center">
+    <Container className="whole-new-album-cont d-flex justify-content-center align-items-center py-3">
       <Row className="new-album-box">
         <Col xs={12} className="single-new-album-box py-3">
           <Row className="rating-layout">

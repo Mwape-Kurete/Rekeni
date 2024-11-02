@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 import NavbarComp from "../Components/NavbarComp";
@@ -11,23 +10,30 @@ import ArtistResultComp from "../Components/ArtistResultComp";
 import "../Styles/main.css";
 
 function Discover() {
-  const [artist, setArtist] = useState(null);
-  const [topAlbums, setTopAlbums] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [artistResults, setArtistResults] = useState([]); // Store multiple artists' data
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (query) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `/api/discover?artistQuery=${encodeURIComponent(query)}`
+        `/api/discover?artistQuery=${encodeURIComponent(query)}`,
+        {
+          timeout: 60000, // 60 seconds timeout
+        }
       );
-      setArtist(response.data.artist);
-      setTopAlbums(response.data.topAlbums);
+
+      // Logging response for debugging
+      console.log("Response data:", response.data);
+
+      // Set the artistResults array
+      setArtistResults(response.data);
     } catch (error) {
-      console.error(
-        "Error Fetching discover results:",
-        error.response ? error.response.data : error.message
-      );
+      console.error("Error Fetching discover results:", error.message);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+      }
+      alert("Something went wrong. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -48,9 +54,18 @@ function Discover() {
       <Row className="album-populate">
         <Col xs={12} className="expand-album-gen">
           {isLoading ? (
-            <p>Loading...</p>
+            <p>Loading... This might take a while, please wait.</p>
+          ) : artistResults.length > 0 ? (
+            artistResults.map((artistData, index) => (
+              <ArtistResultComp
+                key={index}
+                artist={artistData.artist}
+                albums={artistData.topAlbums}
+                loading={isLoading}
+              />
+            ))
           ) : (
-            <ArtistResultComp artist={artist} albums={topAlbums} />
+            <p>No artists found. Please try another search.</p>
           )}
         </Col>
       </Row>
