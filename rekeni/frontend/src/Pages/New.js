@@ -1,36 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
 import { Container, Row, Col } from "react-bootstrap";
-
 import NavbarComp from "../Components/NavbarComp";
 import ReviewCardComp from "../Components/ReviewCardComp";
 import NewAlbumCardComp from "../Components/NewAlbumsCardComp";
 import FooterComp from "../Components/FooterComp";
-import RatingsCardComp from "../Components/RatingsCardComp";
 import AlbumCaroComp from "../Components/AlbumCaroComp";
-
 import "../Styles/main.css";
 
 function New() {
   const location = useLocation();
   const [allReviews, setAllReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [mostReviewed, setmostReviewed] = useState([]);
+  const [mostReviewed, setMostReviewed] = useState([]);
+  const [recommended, setRecommended] = useState([]);
 
   useEffect(() => {
     const fetchTopReviews = async () => {
       try {
         const response = await axios.get(`/api/review`);
-
         console.log("response for fetch home reviews: ", response.data);
-
         setAllReviews(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         console.error("Error Fetching Top Reviews: ", error);
       }
     };
@@ -38,12 +31,10 @@ function New() {
     const fetchMostReviewed = async () => {
       try {
         const response = await axios.get("/api/fetchAlbum/most-reviewed");
-
         console.log("response for fetch most reviewed: ", response.data);
-        setmostReviewed();
+        setMostReviewed(response.data);
       } catch (error) {
-        console.log(error);
-        console.error("Error Fetching Top Reviews: ", error);
+        console.error("Error Fetching Most Reviewed Albums: ", error);
       }
     };
 
@@ -54,6 +45,7 @@ function New() {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+
   return (
     <Container fluid>
       <Row>
@@ -76,14 +68,10 @@ function New() {
         </Col>
       </Row>
       <Row>
-        <Col xs={8} className="gy-3 popular ">
+        <Col xs={8} className="gy-3 popular">
           <h1 className="recent-revs-header">New Album Recommendations</h1>
           <div className="popular-albums">
-            <AlbumCaroComp />
-            <AlbumCaroComp />
-            <AlbumCaroComp />
-            <AlbumCaroComp />
-            <AlbumCaroComp />
+            <AlbumCaroComp albumPropsCards={recommended} />
           </div>
         </Col>
       </Row>

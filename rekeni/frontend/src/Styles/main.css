@@ -47,12 +47,31 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* Home p[age */
+/* Home page */
 .review-sect-home {
   margin-left: 1%;
 }
 
+/* Horizontal scrolling container */
+.review-sect-home {
+  height: 400px;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow-y: auto; /* Enable horizontal scrolling */
+  padding: 5px; /* Optional padding */
+  gap: 50px; /* Add space between cards */
+}
+
+.review-sect-home::-webkit-scrollbar {
+  height: 5px; /* Custom scrollbar height */
+}
+
+.review-sect-home::-webkit-scrollbar-thumb {
+  background-color: #e3333d; /* Color of the scroll thumb */
+  border-radius: 10px !important; /* Rounded scroll thumb */
+}
+
 .album-sect-home {
+  margin-left: 8%;
 }
 
 /*profile page */

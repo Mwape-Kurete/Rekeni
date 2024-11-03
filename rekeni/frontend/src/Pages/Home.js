@@ -15,7 +15,10 @@ import "../Styles/main.css";
 function Home() {
   const location = useLocation();
   const [allReviews, setAllReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [topAlbums, setTopAlbums] = useState([]);
+
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [albumsLoading, setAlbumsLoading] = useState(true);
 
   useEffect(() => {
     const fetchTopReviews = async () => {
@@ -25,17 +28,32 @@ function Home() {
         console.log("response for fetch home reviews: ", response.data);
 
         setAllReviews(response.data);
-        setIsLoading(false);
+        setReviewsLoading(false);
       } catch (error) {
         console.log(error);
         console.error("Error Fetching Top Reviews: ", error);
       }
     };
 
+    const fetchTopAlbums = async () => {
+      try {
+        const response = await axios.get(`/api/fetchAlbum/highest-rated`);
+
+        console.log("response for top albums: ", response.data);
+
+        setTopAlbums(response.data);
+        setAlbumsLoading(false);
+      } catch (error) {
+        console.log(error);
+        console.error("Error Fetching Top Albums: ", error);
+      }
+    };
+
+    fetchTopAlbums();
     fetchTopReviews();
   }, []);
 
-  if (isLoading) {
+  if (reviewsLoading || albumsLoading) {
     return <p>Loading...</p>;
   }
 
@@ -57,7 +75,7 @@ function Home() {
         <Col xs={4} className="album-sect-home ">
           <h1 className="home-titles">Quickview: Highly Rated Albums</h1>
           <div className="popular-albums">
-            <AlbumCaroComp />
+            <AlbumCaroComp albumPropsCards={topAlbums} />
           </div>
         </Col>
       </Row>
