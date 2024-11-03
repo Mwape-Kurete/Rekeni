@@ -1,10 +1,22 @@
 .custom-card {
+  padding: 15px;
   position: relative;
-  width: 250px;
+  width: 200px;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: white !important;
+  margin: 10px;
+
+  font-family: "Montserrat Alternates";
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 /* Style for the image */
@@ -20,7 +32,7 @@
   position: absolute !important;
   top: 8px !important;
   right: 8px !important;
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.532) !important;
   border: none !important;
   border-radius: 50% !important;
   width: 24px !important;

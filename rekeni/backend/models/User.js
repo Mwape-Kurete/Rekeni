@@ -1,14 +1,21 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const favoriteSchema = new mongoose.Schema({
+  albumId: { type: String, required: true },
+  title: { type: String, required: true },
+  artist: { type: String, required: true },
+  artworkUrl: { type: String }, // Ensure this is included
+});
+
 // User Schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   bio: { type: String, required: true },
   password: { type: String, required: true }, // Store hashed password
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }], // User's favorite albums
-  liked: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }], // Store's Users general liked albums
+  favorites: [favoriteSchema], // Replacing 'favourites' with 'favorites'
+  liked: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }], // Stores Users general liked albums
   playHistory: [{ albumId: String, timestamp: Date }], // User's listening history
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 });

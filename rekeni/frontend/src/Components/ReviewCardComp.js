@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../Services/UserContext";
 import "../Styles/ComponentStyles/reviewcard.css";
@@ -11,12 +13,85 @@ import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
 function ReviewCardComp({ allReviews }) {
   const location = useLocation();
-  const { user } = useContext(UserContext); // Assume user context provides userId
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const userId = user?.userId || null;
-
   const [reviewData, setReviewData] = useState(allReviews);
+  const [showModal, setShowModal] = useState(false);
+  const [editContent, setEditContent] = useState("");
+  const [editRating, setEditRating] = useState(0);
+  const [currentReviewId, setCurrentReviewId] = useState(null);
+
+  useEffect(() => {
+    setReviewData(allReviews);
+    setLoading(false);
+  }, [allReviews]);
+
+  const handleShow = (review) => {
+    setEditContent(review.content);
+    setEditRating(review.rating);
+    setCurrentReviewId(review._id);
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setEditContent("");
+    setEditRating(0);
+    setCurrentReviewId(null);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    if (!userId) {
+      console.error("User not authenticated.");
+      return;
+    }
+
+    try {
+      const reviewData = {
+        content: editContent,
+        rating: editRating,
+        userId,
+      };
+      await axios.put(`/api/review/${currentReviewId}`, reviewData);
+      setReviewData((prevReviews) =>
+        prevReviews.map((review) =>
+          review._id === currentReviewId
+            ? { ...review, content: editContent, rating: editRating }
+            : review
+        )
+      );
+      handleClose();
+    } catch (error) {
+      console.error("Error updating review:", error);
+    }
+  };
+
+  const handleDelete = async (reviewId) => {
+    if (!userId) {
+      console.error("User not authenticated.");
+      return;
+    }
+
+    try {
+      await axios.delete(`/api/review/${reviewId}`, {
+        data: { userId },
+      });
+      setReviewData((prevReviews) =>
+        prevReviews.filter((review) => review._id !== reviewId)
+      );
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
 
   const handleLike = async (reviewId) => {
+    if (!userId) {
+      console.error("User not authenticated.");
+      return;
+    }
+
     try {
       const response = await axios.post(`/api/review/${reviewId}/like`, {
         userId,
@@ -38,6 +113,11 @@ function ReviewCardComp({ allReviews }) {
   };
 
   const handleUnlike = async (reviewId) => {
+    if (!userId) {
+      console.error("User not authenticated.");
+      return;
+    }
+
     try {
       const response = await axios.post(`/api/review/${reviewId}/unlike`, {
         userId,
@@ -58,7 +138,18 @@ function ReviewCardComp({ allReviews }) {
     }
   };
 
-  // Conditional rendering if there are no reviews
+  if (loading) {
+    return <p className="text-center mt-3">Loading...</p>;
+  }
+
+  if (!user) {
+    return (
+      <p className="text-center mt-3">
+        Please log in to view and manage reviews.
+      </p>
+    );
+  }
+
   if (!reviewData || reviewData.length === 0) {
     return <p className="text-center mt-3">No reviews available.</p>;
   }
@@ -137,10 +228,19 @@ function ReviewCardComp({ allReviews }) {
                 {isProfilePage && (
                   <Row className="mt-2">
                     <Col className="d-flex justify-content-end">
-                      <Button variant="warning" className="me-2">
+                      <Button
+                        variant="warning"
+                        className="me-2"
+                        onClick={() => handleShow(review)}
+                      >
                         Edit
                       </Button>
-                      <Button variant="danger">Delete</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(review._id)}
+                      >
+                        Delete
+                      </Button>
                     </Col>
                   </Row>
                 )}
@@ -172,6 +272,40 @@ function ReviewCardComp({ allReviews }) {
           </Card>
         );
       })}
+
+      {/* Review Edit Modal */}
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Your Review</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleEditSubmit}>
+            <Form.Group>
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                type="number"
+                max={5}
+                min={1}
+                value={editRating}
+                onChange={(e) => setEditRating(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="commentBox" className="mt-3">
+              <Form.Label>Review</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Edit your review..."
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+              />
+            </Form.Group>
+            <Button type="submit" className="mt-2 text-center">
+              Update
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

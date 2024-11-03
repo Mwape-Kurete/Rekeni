@@ -1,19 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
-
 import "../Styles/ComponentStyles/albumcarocard.css";
 
 function AlbumCaroComp({ albumPropsCards }) {
-  console.log(albumPropsCards);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleCardClick = (albumId) => {
+    console.log(`Navigating to album with ID: ${albumId}`); // Log for debugging
+    navigate(`/singleAlbum?query=${albumId}`); // Navigate with query parameter
+  };
 
   return (
     <>
       {albumPropsCards.map((album) => (
         <Card
-          key={album._id}
-          style={{ width: "18rem" }}
+          key={album.spotifyId}
+          style={{ width: "18rem", cursor: "pointer" }} // Add pointer cursor for UX
           className="bg-dark album-overlays mb-3"
+          onClick={() => handleCardClick(album.spotifyId)} // Add onClick event
         >
           <Card.Img
             src={album.artworkUrl || placeholderImg}

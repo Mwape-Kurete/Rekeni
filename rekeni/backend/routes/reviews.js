@@ -115,10 +115,9 @@ router.get("/:albumId", async (req, res) => {
   }
 
   try {
-    const reviews = await Review.find({ album: albumId }).populate(
-      "user",
-      "username"
-    ); // Populate user field to show who wrote the review
+    const reviews = await Review.find({ album: albumId })
+      .populate("album", "title artworkUrl") // Ensure this line populates `title` and `artworkUrl`
+      .populate("user", "username"); // Populate user with their username
 
     if (!reviews || reviews.length === 0) {
       return res
@@ -158,42 +157,67 @@ router.get("/:albumId/:userId", async (req, res) => {
 
 const checkOwnership = async (req, res, next) => {
   try {
+    console.log("Review ID:", req.params.reviewId);
+
+    // Retrieve the userId from the request body or session
+    const userId = req.body.userId || req.session?.userId;
+
+    if (!userId) {
+      return res.status(403).json({ error: "User not authenticated" });
+    }
+
+    console.log("User ID from request body or session:", userId);
+
     const review = await Review.findById(req.params.reviewId);
     if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
-    if (review.user.toString() !== req.user._id) {
+
+    if (review.user.toString() !== userId) {
       return res.status(403).json({ error: "Unauthorized action" });
     }
+
     next();
   } catch (error) {
+    console.error("Error in checkOwnership middleware:", error);
     res.status(500).json({ error: "Server error", details: error.message });
   }
 };
 
 // Route to update a user's review
-router.put("/:reviewId", checkOwnership, async (req, res) => {
+router.put("/:reviewId", async (req, res) => {
   const { reviewId } = req.params;
-  const { content, rating } = req.body;
+  const { content, rating, userId } = req.body; // Assume userId is passed in the request body
 
-  // Validation: Ensure content and rating are provided
+  // Validate that userId exists in the request body
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+
+  // Validate content and rating
   if (!content || !rating) {
     return res.status(400).json({ error: "Content and rating are required" });
   }
 
   try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      reviewId,
-      { content, rating },
-      { new: true, runValidators: true } // Return updated document with validation
-    );
-
-    if (!updatedReview) {
+    // Find the review and check if the userId matches the review's user field
+    const review = await Review.findById(reviewId);
+    if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
 
-    res.status(200).json(updatedReview);
+    if (review.user.toString() !== userId) {
+      return res.status(403).json({ error: "Unauthorized action" });
+    }
+
+    // Update the review
+    review.content = content;
+    review.rating = rating;
+    await review.save();
+
+    res.status(200).json(review);
   } catch (error) {
+    console.error("Error updating review:", error);
     res
       .status(500)
       .json({ error: "Failed to update review", details: error.message });
@@ -201,18 +225,30 @@ router.put("/:reviewId", checkOwnership, async (req, res) => {
 });
 
 // Route to delete a user's review
-router.delete("/:reviewId", checkOwnership, async (req, res) => {
+router.delete("/:reviewId", async (req, res) => {
   const { reviewId } = req.params;
+  const { userId } = req.body; // Assume userId is passed in the request body
+
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
 
   try {
-    const deletedReview = await Review.findByIdAndDelete(reviewId);
-
-    if (!deletedReview) {
+    // Find the review and check if the userId matches the review's user field
+    const review = await Review.findById(reviewId);
+    if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
 
+    if (review.user.toString() !== userId) {
+      return res.status(403).json({ error: "Unauthorized action" });
+    }
+
+    // Delete the review
+    await review.deleteOne(); // Use deleteOne instead of remove
     res.status(200).json({ message: "Review deleted successfully" });
   } catch (error) {
+    console.error("Error deleting review:", error);
     res
       .status(500)
       .json({ error: "Failed to delete review", details: error.message });

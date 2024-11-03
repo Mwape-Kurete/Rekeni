@@ -18,26 +18,25 @@ function SingleAlbumPage() {
 
   //for loading reviews
   const [allReviews, setAllReviews] = useState([]);
-  const [albumId, setAlbumId] = useState("");
 
   useEffect(() => {
     const fetchSingleAlbum = async () => {
       try {
         const response = await axios.get(`/api/fetchAlbum/${query}`);
-
         setSingleAlbum(response.data);
+        const albumId = response.data._id; // Get albumId from response
+        if (albumId) {
+          fetchReviews(albumId); // Call fetchReviews after albumId is set
+        }
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
-        console.error("Error Fetching this albums data: ", error);
+        console.error("Error Fetching this album's data: ", error);
       }
     };
 
-    const fetchReviews = async () => {
-      setAlbumId(singleAlbum._id);
-
+    const fetchReviews = async (id) => {
       try {
-        const response = await axios.get(`/api/review/${albumId}`);
+        const response = await axios.get(`/api/review/${id}`);
         console.log("Fetched reviews:", response.data);
         setAllReviews(response.data);
       } catch (error) {
@@ -46,8 +45,7 @@ function SingleAlbumPage() {
     };
 
     fetchSingleAlbum();
-    fetchReviews();
-  }, [query, albumId]);
+  }, [query]); // Only depend on `query` so `fetchSingleAlbum` runs when the query changes
 
   if (isLoading) {
     return <p>Loading...</p>;

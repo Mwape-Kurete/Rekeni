@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,20 +7,33 @@ import ReviewCardComp from "../Components/ReviewCardComp";
 import NewAlbumCardComp from "../Components/NewAlbumsCardComp";
 import FooterComp from "../Components/FooterComp";
 import AlbumCaroComp from "../Components/AlbumCaroComp";
+import { UserContext } from "../Services/UserContext";
 import "../Styles/main.css";
 
 function New() {
   const location = useLocation();
+  const { user } = useContext(UserContext);
   const [allReviews, setAllReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mostReviewed, setMostReviewed] = useState([]);
-  const [recommended, setRecommended] = useState([]);
+  const [userSuggestions, setUserSuggestions] = useState([]);
 
   useEffect(() => {
+    const fetchUserSuggestions = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `/api/recommendations/${user.userId}`
+          );
+          setUserSuggestions(response.data);
+        } catch (error) {
+          console.error("Error Fetching User Recommendations: ", error);
+        }
+      }
+    };
     const fetchTopReviews = async () => {
       try {
         const response = await axios.get(`/api/review`);
-        console.log("response for fetch home reviews: ", response.data);
         setAllReviews(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -31,7 +44,6 @@ function New() {
     const fetchMostReviewed = async () => {
       try {
         const response = await axios.get("/api/fetchAlbum/most-reviewed");
-        console.log("response for fetch most reviewed: ", response.data);
         setMostReviewed(response.data);
       } catch (error) {
         console.error("Error Fetching Most Reviewed Albums: ", error);
@@ -40,7 +52,8 @@ function New() {
 
     fetchTopReviews();
     fetchMostReviewed();
-  }, []);
+    fetchUserSuggestions();
+  }, [user]);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -71,7 +84,7 @@ function New() {
         <Col xs={8} className="gy-3 popular">
           <h1 className="recent-revs-header">New Album Recommendations</h1>
           <div className="popular-albums">
-            <AlbumCaroComp albumPropsCards={recommended} />
+            <AlbumCaroComp albumPropsCards={userSuggestions} />
           </div>
         </Col>
       </Row>

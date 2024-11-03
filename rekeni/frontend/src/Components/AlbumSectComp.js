@@ -1,5 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Row, Col, Button, Form, Modal } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Modal,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 import "../Styles/ComponentStyles/single-album-comp.css";
 import "../Styles/ComponentStyles/album-tile.css";
@@ -16,9 +24,12 @@ function AlbumSectComp({ singleAlbum }) {
   const [existingReview, setExistingReview] = useState(null);
   const [favourites, setFavourites] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [tooltipMessage, setTooltipMessage] = useState("");
 
   useEffect(() => {
     if (user) {
+      console.log("Use ID in useEffect: ", user.userId);
+
       // Fetch existing review for this album by the logged-in user
       axios
         .get(`/api/review/${albumId}/${user.userId}`)
@@ -37,7 +48,7 @@ function AlbumSectComp({ singleAlbum }) {
       axios
         .get(`/api/favourites/${user.userId}`)
         .then((response) => {
-          setFavourites(response.data || []);
+          setFavourites(response.data || []); // Ensure default empty array if no data
         })
         .catch((error) => {
           console.error("Error fetching favourites:", error);
@@ -56,7 +67,7 @@ function AlbumSectComp({ singleAlbum }) {
     e.preventDefault();
     const reviewData = {
       albumId,
-      userId: user.userId,
+      userId: user.userId, // Ensure userId is sent
       content,
       rating,
     };
@@ -69,53 +80,75 @@ function AlbumSectComp({ singleAlbum }) {
       }
       setNewReview("");
       handleClose();
-
-      // Auto-refresh the page
-      window.location.reload(); // Refreshes the entire page
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting review:", error);
-    }
-  };
-
-  const handleAddToFavourites = async () => {
-    if (favourites.some((fav) => fav.albumId === albumId)) {
-      alert("This album is already in your favourites.");
-      return;
-    }
-    if (favourites.length >= 5) {
-      alert("You can only have up to 5 favourite albums.");
-      return;
-    }
-
-    try {
-      const newFavourite = {
-        albumId,
-        title: singleAlbum.title,
-        artist: singleAlbum.artist,
-      };
-      await axios.post(`/api/favourites/${albumId}`, {
-        userId: user.userId,
-        ...newFavourite,
-      });
-      setFavourites((prevFavourites) => [...prevFavourites, newFavourite]);
-      alert("Album added to favourites!");
-    } catch (error) {
-      console.error("Error adding to favourites:", error);
     }
   };
 
   const handleDelete = async () => {
     try {
       if (existingReview) {
-        await axios.delete(`/api/review/${existingReview._id}`);
-        setExistingReview(null);
-        setContent("");
-        setRating("");
+        // Include the userId in the request body if required by your backend
+        await axios.delete(`/api/review/${existingReview._id}`, {
+          data: { userId: user.userId }, // Add this line if your backend requires it
+        });
+        setExistingReview(null); // Clear the existing review from the state
+        setContent(""); // Reset the content state
+        setRating(""); // Reset the rating state
+        window.location.reload(); // Reload the page to reflect changes
       }
     } catch (error) {
       console.error("Error deleting review:", error);
     }
   };
+
+  const handleAddToFavourites = async () => {
+    try {
+      const newFavourite = {
+        albumId,
+        title: singleAlbum.title,
+        artist: singleAlbum.artist,
+        artworkUrl: singleAlbum.artworkUrl, // Add this line to include artworkUrl
+      };
+
+      await axios.post(`/api/favourites/${albumId}`, {
+        userId: user.userId,
+        ...newFavourite,
+      });
+
+      setFavourites((prevFavourites) => [...prevFavourites, newFavourite]);
+      setTooltipMessage("Album added to favourites!");
+
+      // Clear tooltip message after 3 seconds
+      setTimeout(() => setTooltipMessage(""), 3000);
+    } catch (error) {
+      console.error("Error adding to favourites:", error);
+      setTooltipMessage("Failed to add to favourites.");
+      setTimeout(() => setTooltipMessage(""), 3000);
+    }
+  };
+
+  const handleRemoveFromFavourites = async () => {
+    try {
+      await axios.delete(`/api/favourites/${albumId}`, {
+        data: { userId: user.userId },
+      });
+      setFavourites((prevFavourites) =>
+        prevFavourites.filter((fav) => fav.albumId !== albumId)
+      );
+      setTooltipMessage("Album removed from favourites!");
+
+      // Clear tooltip message after 3 seconds
+      setTimeout(() => setTooltipMessage(""), 3000);
+    } catch (error) {
+      console.error("Error removing from favourites:", error);
+      setTooltipMessage("Failed to remove from favourites.");
+      setTimeout(() => setTooltipMessage(""), 3000);
+    }
+  };
+
+  const isFavourite = favourites.some((fav) => fav.albumId === albumId);
 
   return (
     <div className="whole-container-albs">
@@ -194,13 +227,31 @@ function AlbumSectComp({ singleAlbum }) {
                 </div>
               )}
               <div className="d-flex justify-content-center align-items-center favsBTNcont">
-                <Button
-                  className="mb-3 addToFavs"
-                  onClick={handleAddToFavourites}
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip>
+                      {tooltipMessage || "add or remove from favourites"}
+                    </Tooltip>
+                  }
                 >
-                  Add To Your Favourites
-                </Button>
+                  <Button
+                    className={`mb-3 ${
+                      isFavourite ? "removeFromFavs" : "addToFavs"
+                    }`}
+                    onClick={
+                      isFavourite
+                        ? handleRemoveFromFavourites
+                        : handleAddToFavourites
+                    }
+                  >
+                    {isFavourite
+                      ? "Remove from Favourites"
+                      : "Add to Favourites"}
+                  </Button>
+                </OverlayTrigger>
               </div>
+
               {/* Review Modal */}
               <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header closeButton>

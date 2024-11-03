@@ -1,10 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
-
 import "../Styles/ComponentStyles/new-albums-card.css";
 
-function NewAlbumCardComp({ albumProps }) {
+function NewAlbumCardComp({ albumProps = [] }) {
+  if (albumProps.length === 0) {
+    return <p>No albums available</p>;
+  }
+
   return (
     <Container className="whole-new-album-cont d-flex justify-content-center align-items-center py-3">
       {albumProps.map((album) => (
