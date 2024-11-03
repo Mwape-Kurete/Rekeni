@@ -17,20 +17,26 @@ function New() {
   const [isLoading, setIsLoading] = useState(true);
   const [mostReviewed, setMostReviewed] = useState([]);
   const [userSuggestions, setUserSuggestions] = useState([]);
+  const [isLoadingRecommendations, setIsLoadingRecommendations] =
+    useState(true);
 
   useEffect(() => {
     const fetchUserSuggestions = async () => {
       if (user) {
         try {
+          setIsLoadingRecommendations(true);
           const response = await axios.get(
             `/api/recommendations/${user.userId}`
           );
           setUserSuggestions(response.data);
         } catch (error) {
           console.error("Error Fetching User Recommendations: ", error);
+        } finally {
+          setIsLoadingRecommendations(false);
         }
       }
     };
+
     const fetchTopReviews = async () => {
       try {
         const response = await axios.get(`/api/review`);
@@ -52,8 +58,25 @@ function New() {
 
     fetchTopReviews();
     fetchMostReviewed();
-    fetchUserSuggestions();
+
+    if (user) {
+      fetchUserSuggestions();
+    }
   }, [user]);
+
+  if (!user) {
+    return (
+      <Container fluid>
+        <NavbarComp />
+        <Row>
+          <Col xs={12} className="text-center mt-5">
+            <h2>Please log in to see personalized recommendations.</h2>
+          </Col>
+        </Row>
+        <FooterComp />
+      </Container>
+    );
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -82,10 +105,22 @@ function New() {
       </Row>
       <Row>
         <Col xs={8} className="gy-3 popular">
-          <h1 className="recent-revs-header">New Album Recommendations</h1>
-          <div className="popular-albums">
-            <AlbumCaroComp albumPropsCards={userSuggestions} />
-          </div>
+          <h1 className="recent-revs-header">
+            Today's Recommendation is:{" "}
+            {userSuggestions[0]?.artist || "Loading..."}
+          </h1>
+          {isLoadingRecommendations ? (
+            <p>Loading recommendations... This may take a while.</p>
+          ) : userSuggestions.length === 0 ? (
+            <p>
+              No recommendations available. Explore new albums and add them to
+              your favourites for personalized suggestions!
+            </p>
+          ) : (
+            <div className="popular-albums">
+              <AlbumCaroComp albumPropsCards={userSuggestions} />
+            </div>
+          )}
         </Col>
       </Row>
       <footer>

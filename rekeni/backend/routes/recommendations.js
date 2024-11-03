@@ -10,7 +10,8 @@ const {
 
 console.log("Recommendation route has loaded");
 
-router.get("/recommendations/:userId", async (req, res) => {
+// Get unique recommendations
+router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
   console.log("Received request for recommendations for userId:", userId);
 
@@ -56,6 +57,7 @@ router.get("/recommendations/:userId", async (req, res) => {
           `Error fetching recommendations for artist ${album.artist}:`,
           artistError
         );
+        // Optionally, handle the error here without responding directly
       }
     }
 
@@ -66,10 +68,10 @@ router.get("/recommendations/:userId", async (req, res) => {
       .slice(0, 25); // Limit results to 25 unique recommendations
 
     console.log("Final unique recommendations:", uniqueRecommendations);
-    res.status(200).json(uniqueRecommendations);
+    return res.status(200).json(uniqueRecommendations); // Ensure only one response
   } catch (error) {
     console.error("Error fetching recommendations:", error);
-    res.status(500).json({ error: "Failed to fetch recommendations" });
+    return res.status(500).json({ error: "Failed to fetch recommendations" });
   }
 });
 

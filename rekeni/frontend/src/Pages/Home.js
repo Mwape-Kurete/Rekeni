@@ -75,7 +75,7 @@ function Home() {
         <Col xs={4} className="album-sect-home ">
           <h1 className="home-titles">Quickview: Highly Rated Albums</h1>
           <div className="popular-albums">
-            <AlbumCaroComp albumPropsCards={topAlbums} />
+            <AlbumCaroComp albumPropsCards={topAlbums} isHomePage={true} />
           </div>
         </Col>
       </Row>
