@@ -5,7 +5,7 @@ import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 
 import "../Styles/ComponentStyles/new-albums-card.css";
 
-function NewAlbumCardComp() {
+function NewAlbumCardComp({ albumProps }) {
   return (
     <Container className="whole-new-album-cont d-flex justify-content-center align-items-center py-3">
       <Row className="new-album-box">

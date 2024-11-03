@@ -18,19 +18,9 @@ function SingleAlbumPage() {
 
   //for loading comments
   const [allReviews, setAllReviews] = useState([]);
-  const albumId = new URLSearchParams(location.search).get("query");
+  const [albumId, setAlbumId] = useState("");
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(`/api/review/${albumId}`);
-
-        setAllReviews(response.data);
-      } catch (error) {
-        console.error("There was an error fetching reviews: ", error);
-      }
-    };
-
     const fetchSingleAlbum = async () => {
       try {
         const response = await axios.get(`/api/fetchAlbum/${query}`);
@@ -42,6 +32,19 @@ function SingleAlbumPage() {
         console.error("Error Fetching this albums data: ", error);
       }
     };
+
+    const fetchReviews = async () => {
+      setAlbumId(singleAlbum._id);
+
+      try {
+        const response = await axios.get(`/api/review/${albumId}`);
+        console.log("Fetched reviews:", response.data);
+        setAllReviews(response.data);
+      } catch (error) {
+        console.error("There was an error fetching reviews: ", error);
+      }
+    };
+
     fetchSingleAlbum();
     fetchReviews();
   }, [query, albumId]);
@@ -63,7 +66,7 @@ function SingleAlbumPage() {
         </Col>
       </Row>
       <Row className="review-section-single">
-        <Col xs={12} className="review-single-cont">
+        <Col className="review-single-cont col-6">
           <ReviewCardComp allReviews={allReviews} location={location} />
         </Col>
       </Row>

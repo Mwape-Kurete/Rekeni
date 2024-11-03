@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 import { Col, Row, Container } from "react-bootstrap";
 
@@ -11,6 +13,32 @@ import FooterComp from "../Components/FooterComp";
 import "../Styles/main.css";
 
 function Home() {
+  const location = useLocation();
+  const [allReviews, setAllReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTopReviews = async () => {
+      try {
+        const response = await axios.get(`/api/review/top-reviews`);
+
+        console.log("response for fetch home reviews: ", response.data);
+
+        setAllReviews(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        console.error("Error Fetching Top Reviews: ", error);
+      }
+    };
+
+    fetchTopReviews();
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Container fluid>
       <Row>
@@ -23,13 +51,12 @@ function Home() {
       </Row>
       <Row>
         <Col xs={6} className="review-sect-home">
-          <h1 className="home-titles">Quickview: Reviews</h1>
-          <ReviewcCardComp />
+          <h1 className="home-titles">Quickview: Top Reviews</h1>
+          <ReviewcCardComp allReviews={allReviews} location={location} />
         </Col>
         <Col xs={4} className="album-sect-home ">
           <h1 className="home-titles">Quickview: Highly Rated Albums</h1>
           <div className="popular-albums">
-            <AlbumCaroComp />
             <AlbumCaroComp />
           </div>
         </Col>

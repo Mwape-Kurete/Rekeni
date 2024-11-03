@@ -26,15 +26,46 @@ router.post("/:albumId", async (req, res) => {
     // Add album to favourites with additional details
     user.favourites.push({ albumId, title, artist });
     await user.save();
+    res.status(200).json({
+      message: "Album added to favourites",
+      favourites: user.favourites,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to add album to favourites",
+      details: error.message,
+    });
+  }
+});
+
+// Route to delete album from favourites
+router.delete("/:albumId", async (req, res) => {
+  const { userId } = req.body;
+  const { albumId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Find and remove the album from favourites
+    const albumIndex = user.favourites.findIndex(
+      (fav) => fav.albumId === albumId
+    );
+    if (albumIndex === -1) {
+      return res.status(400).json({ error: "Album not found in favourites" });
+    }
+
+    user.favourites.splice(albumIndex, 1);
+    await user.save();
     res
       .status(200)
       .json({
-        message: "Album added to favourites",
+        message: "Album removed from favourites",
         favourites: user.favourites,
       });
   } catch (error) {
     res.status(500).json({
-      error: "Failed to add album to favourites",
+      error: "Failed to delete album from favourites",
       details: error.message,
     });
   }

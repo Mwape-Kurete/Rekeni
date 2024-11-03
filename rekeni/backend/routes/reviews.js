@@ -1,6 +1,7 @@
 const express = require("express");
 const Review = require("../models/Review");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 //Route to create reviews
 router.post("/", async (req, res) => {
@@ -33,9 +34,85 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Route to get all reviews (descending by likes)
+router.get("/", async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("album", "title artworkUrl") // Populate album with its title and artwork
+      .populate("user", "username") // Populate user with their username
+      .sort({ likes: -1 }); // Sort by likes in descending order
+
+    if (!reviews || reviews.length === 0) {
+      return res.status(404).json({ message: "No reviews found" });
+    }
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch reviews", details: error.message });
+  }
+});
+
+// Route to get top reviews by like count
+router.get("/top-reviews", async (req, res) => {
+  try {
+    const topReviews = await Review.find()
+      .populate("user", "username")
+      .populate("album", "title artist artworkUrl") // Ensure album details are populated
+      .sort({ likes: -1 })
+      .limit(10);
+
+    if (!topReviews || topReviews.length === 0) {
+      return res.status(404).json({ message: "No reviews found" });
+    }
+
+    res.status(200).json(topReviews);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch top reviews", details: error.message });
+  }
+});
+
+// Route to get all reviews by a specific user
+router.get("/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Validate that the userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    // Find all reviews where the user field matches the userId
+    const userReviews = await Review.find({ user: userId })
+      .populate("album", "title artist artworkUrl") // Populate album with relevant fields
+      .populate("user", "username"); // Populate user with their username
+
+    if (!userReviews || userReviews.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No reviews found for this user" });
+    }
+
+    res.status(200).json(userReviews);
+  } catch (error) {
+    console.error("Failed to fetch user reviews: ", error);
+    res.status(500).json({
+      error: "Failed to fetch user reviews",
+      details: error.message,
+    });
+  }
+});
+
 // Route to get all reviews for an album
 router.get("/:albumId", async (req, res) => {
   const { albumId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(albumId)) {
+    return res.status(400).json({ error: "Invalid album ID format" });
+  }
 
   try {
     const reviews = await Review.find({ album: albumId }).populate(
