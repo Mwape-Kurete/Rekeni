@@ -12,7 +12,7 @@ import placeholderImg from "../Asset/pexels-scenicspire-358690216-28216688.jpg";
 function ReviewCardComp({ allReviews }) {
   const location = useLocation();
   const { user } = useContext(UserContext); // Assume user context provides userId
-  const userId = user?.userId;
+  const userId = user?.userId || null;
 
   const [reviewData, setReviewData] = useState(allReviews);
 
@@ -67,6 +67,7 @@ function ReviewCardComp({ allReviews }) {
     <>
       {reviewData.map((review) => {
         const userHasLiked = review.likedBy.includes(userId);
+        const isProfilePage = location.pathname.includes("profile");
 
         return (
           <Card
@@ -109,26 +110,40 @@ function ReviewCardComp({ allReviews }) {
                 <Card.Text>
                   {review?.content || "No content available"}
                 </Card.Text>
-                <Row className="user-information">
-                  <Col className="username-handle">
-                    <Card.Text>
-                      <small>
-                        <span>@{review?.user?.username || "Unknown User"}</span>
-                      </small>
-                    </Card.Text>
-                  </Col>
-                  <Col className="timestamp-review d-flex justify-content-end">
-                    <Card.Text>
-                      <small>
-                        <span>
-                          {new Date(
-                            review?.createdAt || Date.now()
-                          ).toLocaleString()}
-                        </span>
-                      </small>
-                    </Card.Text>
-                  </Col>
-                </Row>
+                {!isProfilePage && (
+                  <Row className="user-information">
+                    <Col className="username-handle">
+                      <Card.Text>
+                        <small>
+                          <span>
+                            @{review?.user?.username || "Unknown User"}
+                          </span>
+                        </small>
+                      </Card.Text>
+                    </Col>
+                    <Col className="timestamp-review d-flex justify-content-end">
+                      <Card.Text>
+                        <small>
+                          <span>
+                            {new Date(
+                              review?.createdAt || Date.now()
+                            ).toLocaleString()}
+                          </span>
+                        </small>
+                      </Card.Text>
+                    </Col>
+                  </Row>
+                )}
+                {isProfilePage && (
+                  <Row className="mt-2">
+                    <Col className="d-flex justify-content-end">
+                      <Button variant="warning" className="me-2">
+                        Edit
+                      </Button>
+                      <Button variant="danger">Delete</Button>
+                    </Col>
+                  </Row>
+                )}
                 <Row className="like-btn">
                   <Col className="col-12 d-flex justify-content-end">
                     <Button

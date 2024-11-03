@@ -16,7 +16,7 @@ function SingleAlbumPage() {
   const [isLoading, setIsLoading] = useState(true);
   const query = new URLSearchParams(location.search).get("query");
 
-  //for loading comments
+  //for loading reviews
   const [allReviews, setAllReviews] = useState([]);
   const [albumId, setAlbumId] = useState("");
 

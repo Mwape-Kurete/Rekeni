@@ -187,7 +187,7 @@ function AlbumSectComp({ singleAlbum }) {
                   </div>
                 </div>
               ) : (
-                <div className="leave-review">
+                <div className="d-flex justify-content-center align-items-center leave-review">
                   <Button onClick={handleShow} className="mb-3 leave-reviewBTN">
                     Leave Your Review
                   </Button>
