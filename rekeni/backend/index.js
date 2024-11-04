@@ -1,11 +1,11 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables
 
 const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
-const timeout = require("connect-timeout"); // middleware timeout import
+const timeout = require("connect-timeout");
+const path = require("path");
 
 console.log("Server is starting...");
 
@@ -21,15 +21,32 @@ const discoverRoute = require("./routes/discover");
 const newReleasesRoute = require("./routes/newReleases");
 const fetchAlbumRoute = require("./routes/fetchAlbum");
 
-dotenv.config();
-
+// Initialize the Express app
 const app = express();
+
+// Middleware to parse JSON
 app.use(express.json());
 
-app.use(timeout("60s")); //60s timeout for all my routes
+// Apply timeout middleware globally
+app.use(timeout("60s"));
 
-// Enable CORS with default settings (allow all origins)
+// CORS middleware with default settings (allow all origins)
 app.use(cors());
+
+// Static file serving for the frontend (adjust the path as needed)
+app.use(express.static(path.resolve(__dirname, "build")));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+// Custom timeout handler middleware
+app.use((req, res, next) => {
+  res.setTimeout(60000, () => {
+    console.error("Request timed out.");
+    res.status(503).json({ error: "Service unavailable: request timed out" });
+  });
+  next();
+});
 
 // Connect to MongoDB
 mongoose
@@ -38,24 +55,26 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 
-// Simple route
+// Simple test route
 app.get("/", (req, res) => {
   res.send("Rekeni backend is running");
 });
 
-// Connecting routes
-app.use("/api/auth", authRoutes); // Authentication routes
-app.use("/api/favourites", favoriteRoutes); // Favorite album routes
-app.use("/api/history", historyRoutes); // Play history routes
-app.use("/api/recommendations", recommendationRoutes); // Recommendation routes
-app.use("/api/review", reviewRoute); // Reviews routes
-app.use("/api/search", searchRoutes); // Search routes
-app.use("/api/searchAlbums", searchSpotifyRoute); // Search Spotify routes
-app.use("/api/discover", discoverRoute); // Discover new Route
-app.use("/api/newReleases", newReleasesRoute); //new releases route
-app.use("/api/fetchAlbum", fetchAlbumRoute); //fetch album route
+// Route handlers
+app.use("/api/auth", authRoutes);
+app.use("/api/favourites", favoriteRoutes);
+app.use("/api/history", historyRoutes);
+app.use("/api/recommendations", recommendationRoutes);
+app.use("/api/review", reviewRoute);
+app.use("/api/search", searchRoutes);
+app.use("/api/searchAlbums", searchSpotifyRoute);
+app.use("/api/discover", discoverRoute);
+app.use("/api/newReleases", newReleasesRoute);
+app.use("/api/fetchAlbum", fetchAlbumRoute);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
