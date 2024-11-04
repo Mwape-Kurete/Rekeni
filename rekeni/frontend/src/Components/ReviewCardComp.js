@@ -175,15 +175,15 @@ function ReviewCardComp({ allReviews }) {
               </Col>
             )}
             <Col
-              className={`review-card-body ${
+              className={`review-card-body single-content ${
                 location.pathname.includes("singleAlbum") ? "col-12" : "col-6"
               } d-flex align-items-center`}
             >
-              <Card.Body className="card-body-content-review">
-                <Card.Title className="album-title">
+              <Card.Body className="card-body-content-review single-body">
+                <Card.Title className="album-title single-title">
                   {review?.album?.title || "Unknown Album"}
                 </Card.Title>
-                <div className="d-flex align-items-center stars-rating">
+                <div className="d-flex align-items-center stars-rating single-rating">
                   {[...Array(5)].map((_, index) => (
                     <i
                       key={index}
@@ -202,7 +202,7 @@ function ReviewCardComp({ allReviews }) {
                   {review?.content || "No content available"}
                 </Card.Text>
                 {!isProfilePage && (
-                  <Row className="user-information">
+                  <Row className="user-information single-userInfo">
                     <Col className="username-handle">
                       <Card.Text>
                         <small>
@@ -244,7 +244,7 @@ function ReviewCardComp({ allReviews }) {
                     </Col>
                   </Row>
                 )}
-                <Row className="like-btn">
+                <Row className="like-btn single-likes">
                   <Col className="col-12 d-flex justify-content-end">
                     <Button
                       className="like-button"

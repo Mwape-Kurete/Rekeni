@@ -27,7 +27,7 @@ function ArtistResultComp({ artist, albums, loading }) {
       ) : artist ? (
         <>
           {/* Main artist card */}
-          <Row className="results-search-contain">
+          <Row className="results-search-contain d-flex justify-content-center align-items-center">
             <Col
               className="result-col-discover col-4 d-flex align-items-center"
               onClick={handleShow}
@@ -55,19 +55,20 @@ function ArtistResultComp({ artist, albums, loading }) {
               {firstAlbum && (
                 <>
                   <h3>Top Album</h3>
-                  <div className="modal-album-item">
+                  <div className="modal-album-item d-flex align-items-start">
                     <img
                       className="modal-img"
                       src={firstAlbum.artwork || placeholderImg}
                       alt={`${firstAlbum.title} album cover`}
                     />
-                    <div className="modal-album-meta">
+                    <div className="modal-album-meta ms-3">
                       <h5>{firstAlbum.title}</h5>
                       <p>Release Date: {firstAlbum.releaseDate}</p>
                       <a
                         href={firstAlbum.albumUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="link-to-spotify"
                       >
                         View on Spotify
                       </a>
@@ -80,19 +81,23 @@ function ArtistResultComp({ artist, albums, loading }) {
                 <>
                   <h4>Other Top Albums</h4>
                   {remainingAlbums.map((album, index) => (
-                    <div key={index} className="modal-album-item">
+                    <div
+                      key={index}
+                      className="modal-album-item d-flex align-items-start"
+                    >
                       <img
                         className="modal-img"
                         src={album.artwork || placeholderImg}
                         alt={`${album.title} album cover`}
                       />
-                      <div className="modal-album-meta">
+                      <div className="modal-album-meta ms-3">
                         <h5>{album.title}</h5>
                         <p>Release Date: {album.releaseDate}</p>
                         <a
                           href={album.albumUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          className="link-to-spotify"
                         >
                           View on Spotify
                         </a>

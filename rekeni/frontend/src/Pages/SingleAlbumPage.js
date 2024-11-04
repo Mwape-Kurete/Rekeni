@@ -64,7 +64,7 @@ function SingleAlbumPage() {
         </Col>
       </Row>
       <Row className="review-section-single">
-        <Col className="review-single-cont col-6">
+        <Col className="review-single-cont col-12 d-flex justify-content-center align-items-center">
           <ReviewCardComp allReviews={allReviews} location={location} />
         </Col>
       </Row>

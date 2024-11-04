@@ -122,6 +122,9 @@ h1 {
 }
 
 /*new rekenis */
+.small-more-info {
+  font-size: 10px;
+}
 .recent-revs-header {
   color: #fff;
   font-family: "Montserrat Alternates";
@@ -240,4 +243,35 @@ a.btn.btn-next-page {
   max-height: 400px;
   margin-bottom: 15px;
   overflow-y: scroll;
+}
+
+/*Single Album Page */
+
+.review-section-single {
+  overflow-y: scroll;
+  width: 100%;
+  height: 400px;
+}
+
+/* Hide the scrollbar for WebKit browsers */
+.review-section-single::-webkit-scrollbar {
+  width: 0; /* Hides the scrollbar */
+  height: 0; /* Hides the horizontal scrollbar */
+  background: transparent; /* Ensures the scrollbar is transparent */
+}
+
+/* For Firefox */
+.review-section-single {
+  scrollbar-width: none; /* Hides scrollbar for Firefox */
+}
+
+/* For Edge and IE (not recommended, but for legacy support) */
+.review-section-single {
+  -ms-overflow-style: none; /* Hides scrollbar for IE and Edge */
+}
+
+.review-single-cont {
+  display: flex;
+  flex-direction: column; /* Ensures vertical stacking */
+  gap: 1rem; /* Adds space between each card */
 }

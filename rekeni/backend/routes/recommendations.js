@@ -1,74 +1,70 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User"); // Ensure User model is imported correctly
-
+const User = require("../models/User");
 const {
   getArtistRecommendationsSpotify,
   getArtistRecommendationsLastFM,
   getSimilarArtistsTasteDive,
 } = require("../services/recommendationService");
 
-console.log("Recommendation route has loaded");
+const fetchWithTimeout = (fetchPromise, timeout = 10000) => {
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Request timed out")), timeout)
+  );
+  return Promise.race([fetchPromise, timeoutPromise]);
+};
 
-// Get unique recommendations
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
-  console.log("Received request for recommendations for userId:", userId);
-
   try {
     const user = await User.findById(userId).populate("favorites");
-    if (!user) {
-      console.error("User not found for userId:", userId);
-      return res.status(404).json({ error: "User not found" });
-    }
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    console.log("User found:", user.username);
-    console.log("User favorites:", user.favorites);
+    const excludedArtists = new Set(
+      user.favorites.map((album) => album.artist.toLowerCase())
+    );
 
     const recommendations = [];
-
     for (const album of user.favorites) {
-      console.log("Fetching recommendations for album artist:", album.artist);
-
       try {
         const [spotifyResults, lastFMResults, tasteDiveResults] =
           await Promise.all([
-            getArtistRecommendationsSpotify(album.artist),
-            getArtistRecommendationsLastFM(album.artist),
-            getSimilarArtistsTasteDive(album.artist),
+            fetchWithTimeout(
+              getArtistRecommendationsSpotify(album.artist),
+              10000
+            ),
+            fetchWithTimeout(
+              getArtistRecommendationsLastFM(album.artist),
+              10000
+            ),
+            fetchWithTimeout(getSimilarArtistsTasteDive(album.artist), 10000),
           ]);
 
-        console.log("Spotify results for", album.artist, ":", spotifyResults);
-        console.log("LastFM results for", album.artist, ":", lastFMResults);
-        console.log(
-          "TasteDive results for",
-          album.artist,
-          ":",
-          tasteDiveResults
-        );
-
         recommendations.push(
-          ...spotifyResults,
-          ...lastFMResults,
-          ...tasteDiveResults
+          ...[...spotifyResults, ...lastFMResults, ...tasteDiveResults].filter(
+            (rec) =>
+              rec.artist && !excludedArtists.has(rec.artist.toLowerCase())
+          )
         );
-      } catch (artistError) {
+      } catch (err) {
         console.error(
-          `Error fetching recommendations for artist ${album.artist}:`,
-          artistError
+          `Error fetching recommendations for ${album.artist}:`,
+          err.message
         );
-        // Optionally, handle the error here without responding directly
       }
     }
 
     const uniqueRecommendations = recommendations
       .filter(
-        (rec, index, self) => index === self.findIndex((r) => r.id === rec.id)
+        (rec, index, self) =>
+          index ===
+          self.findIndex(
+            (r) => r.artist.toLowerCase() === rec.artist.toLowerCase()
+          )
       )
-      .slice(0, 25); // Limit results to 25 unique recommendations
+      .slice(0, 25);
 
-    console.log("Final unique recommendations:", uniqueRecommendations);
-    return res.status(200).json(uniqueRecommendations); // Ensure only one response
+    return res.status(200).json(uniqueRecommendations);
   } catch (error) {
     console.error("Error fetching recommendations:", error);
     return res.status(500).json({ error: "Failed to fetch recommendations" });

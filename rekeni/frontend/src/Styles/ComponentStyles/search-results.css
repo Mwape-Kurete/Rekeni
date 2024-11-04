@@ -118,22 +118,40 @@ img.result-img-search {
   cursor: pointer;
 }
 
-.modal-content {
-  /*background colour*/
-  background: rgba(255, 255, 255, 0.038) !important;
-  backdrop-filter: blur(10.5px) !important;
-  -webkit-backdrop-filter: blur(10.5px) !important;
-  border-radius: 10px !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #fff;
+/*modal*/
+.modal-album-item {
+  display: flex;
+  align-items: start; /* Aligns the content at the start */
+  margin-bottom: 25px; /* Space between albums */
 }
 
 .modal-img {
   width: 100px;
   height: 100px;
   border-radius: 25px;
+  flex-shrink: 0; /* Prevents the image from shrinking */
 }
 
 .modal-album-meta {
-  display: inline;
+  margin-left: 15px; /* Space between the image and the meta information */
+  display: flex;
+  flex-direction: column; /* Ensures text inside is stacked vertically */
+}
+
+.modal-content {
+  background: rgb(255, 255, 255) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: black !important;
+}
+
+.link-to-spotify {
+  text-decoration: none;
+  color: #e3333d;
+  transition: all 1000ms;
+}
+
+.link-to-spotify:hover {
+  text-decoration: underline;
+  color: #ab1a21;
 }
