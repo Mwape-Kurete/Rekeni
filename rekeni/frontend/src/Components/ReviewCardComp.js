@@ -139,19 +139,19 @@ function ReviewCardComp({ allReviews }) {
   };
 
   if (loading) {
-    return <p className="text-center mt-3">Loading...</p>;
+    return <p className="text-center mt-3 load">Loading...</p>;
   }
 
   if (!user) {
     return (
-      <p className="text-center mt-3">
+      <p className="text-center mt-3 load">
         Please log in to view and manage reviews.
       </p>
     );
   }
 
   if (!reviewData || reviewData.length === 0) {
-    return <p className="text-center mt-3">No reviews available.</p>;
+    return <p className="text-center mt-3 load-fail">No reviews available.</p>;
   }
 
   return (

@@ -54,7 +54,7 @@ function Home() {
   }, []);
 
   if (reviewsLoading || albumsLoading) {
-    return <p>Loading...</p>;
+    return <p className="load">Loading...</p>;
   }
 
   return (

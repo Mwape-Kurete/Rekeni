@@ -38,18 +38,30 @@ const getSimilarArtistsTasteDive = async (artistQuery) => {
 
 //spotify
 const getArtistRecommendationsSpotify = async (artistQuery) => {
-  const artists = await searchSpotifyArtists(artistQuery);
-  const artistRecommendations = [];
+  try {
+    const artists = await searchSpotifyArtists(artistQuery);
+    if (!Array.isArray(artists) || artists.length === 0) {
+      console.warn(`No artists found for query: ${artistQuery}`);
+      return []; // Return an empty array if no artists are found
+    }
 
-  for (const artist of artists) {
-    const topAlbums = await getTopAlbumsByArtistSpotify(artist.name);
-    artistRecommendations.push({
-      artist: artist.name,
-      topAlbums,
-    });
+    const artistRecommendations = [];
+    for (const artist of artists) {
+      const topAlbums = await getTopAlbumsByArtistSpotify(artist.name);
+      artistRecommendations.push({
+        artist: artist.name,
+        topAlbums: Array.isArray(topAlbums) ? topAlbums : [], // Ensure topAlbums is always an array
+      });
+    }
+
+    return artistRecommendations;
+  } catch (error) {
+    console.error(
+      `Error in getArtistRecommendationsSpotify for "${artistQuery}":`,
+      error
+    );
+    return []; // Return an empty array if an error occurs
   }
-
-  return artistRecommendations;
 };
 
 //lastFM

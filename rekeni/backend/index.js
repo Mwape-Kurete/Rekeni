@@ -31,24 +31,6 @@ app.use(timeout("60s")); //60s timeout for all my routes
 // Enable CORS with default settings (allow all origins)
 app.use(cors());
 
-// Add session handling middleware
-app.use(
-  session({
-    secret: "your-secret-key", // Replace with a secure secret
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Set to true if you're using HTTPS
-  })
-);
-
-// Middleware to add userId to req.session if present in request
-app.use((req, res, next) => {
-  if (req.headers["x-user-id"]) {
-    req.session.userId = req.headers["x-user-id"];
-  }
-  next();
-});
-
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, {

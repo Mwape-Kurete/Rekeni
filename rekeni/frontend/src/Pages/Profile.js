@@ -44,7 +44,7 @@ function Profile() {
   }, [userId]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="load">Loading...</p>;
   }
 
   return (

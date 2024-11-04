@@ -8,11 +8,13 @@ function AlbumCaroComp({ albumPropsCards, isLoading, isHomePage }) {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <p>Loading recommendations... This may take a moment.</p>;
+    return (
+      <p className="load">Loading recommendations... This may take a moment.</p>
+    );
   }
 
   if (!albumPropsCards || albumPropsCards.length === 0) {
-    return <p>No albums to display.</p>;
+    return <p className="load">No albums to display.</p>;
   }
 
   const handleCardClick = (albumUrl, albumId) => {

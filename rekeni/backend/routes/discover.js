@@ -33,6 +33,17 @@ router.get("/", async (req, res) => {
       ...tasteDiveResults,
     ].filter((artist) => artist.topAlbums && artist.topAlbums.length > 0);
 
+    // Create a Set to keep track of unique artists (case-insensitive)
+    const uniqueArtists = new Set();
+    allRecommendations = allRecommendations.filter((artist) => {
+      const artistName = artist.artist.toLowerCase();
+      if (uniqueArtists.has(artistName)) {
+        return false; // Skip if artist is already added
+      }
+      uniqueArtists.add(artistName);
+      return true; // Include if artist is unique
+    });
+
     // Cap the number of top albums for each artist to 5
     allRecommendations = allRecommendations.map((artist) => ({
       ...artist,

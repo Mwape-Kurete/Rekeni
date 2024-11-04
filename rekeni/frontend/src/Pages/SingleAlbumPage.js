@@ -48,7 +48,7 @@ function SingleAlbumPage() {
   }, [query]); // Only depend on `query` so `fetchSingleAlbum` runs when the query changes
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="load">Loading...</p>;
   }
 
   return (

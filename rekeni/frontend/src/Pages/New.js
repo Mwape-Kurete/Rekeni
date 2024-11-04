@@ -70,7 +70,9 @@ function New() {
         <NavbarComp />
         <Row>
           <Col xs={12} className="text-center mt-5">
-            <h2>Please log in to see personalized recommendations.</h2>
+            <h2 className="login-prompt">
+              Please log in to see personalized recommendations.
+            </h2>
           </Col>
         </Row>
         <FooterComp />
@@ -79,7 +81,7 @@ function New() {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="load">Loading...</p>;
   }
 
   return (
@@ -108,7 +110,11 @@ function New() {
       </Row>
       <Row>
         <Col xs={8} className="gy-3 popular">
-          <h1 className="recent-revs-header">
+          <h1 className="recent-revs-header">Looking for something new?</h1>
+          <p className="explore-prompt">
+            explore with Rekeni via our discover page!
+          </p>
+          {/* <h1 className="recent-revs-header">
             Today's Recommendation is:{" "}
             {userSuggestions[0]?.artist || "Loading..."}
           </h1>
@@ -123,7 +129,7 @@ function New() {
             <div className="popular-albums">
               <AlbumCaroComp albumPropsCards={userSuggestions} />
             </div>
-          )}
+          )} */}
         </Col>
       </Row>
       <footer>

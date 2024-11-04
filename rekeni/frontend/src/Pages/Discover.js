@@ -54,7 +54,9 @@ function Discover() {
       <Row className="album-populate">
         <Col xs={12} className="expand-album-gen">
           {isLoading ? (
-            <p>Loading... This might take a while, please wait.</p>
+            <p className="load">
+              Loading... This might take a while, please wait.
+            </p>
           ) : artistResults.length > 0 ? (
             artistResults.map((artistData, index) => (
               <ArtistResultComp
@@ -65,7 +67,9 @@ function Discover() {
               />
             ))
           ) : (
-            <p>No artists found. Please try another search.</p>
+            <p className="load-fail">
+              No artists found. Please try another search.
+            </p>
           )}
         </Col>
       </Row>
