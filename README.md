@@ -157,13 +157,17 @@ Below are future deliverables this project has to further expand it's functional
 
 *** 
 # Demo Video 
+Link to my demonstration video:
 
+[DEMO VIDEO GDRIVE LINK](https://drive.google.com/drive/folders/1LVLGkS-8TIEjKaOPU0uJaSgyeHhDwNxe?usp=sharing) 
 *** 
 # Deployed Site
 _Google Cloud Platform_ 
+
 [GCP: Rekeni](https://rekeni.oa.r.appspot.com/new)
 ___
 _Heroku_ 
+
 [Heroku: Rekeni](https://rekeni-backend-app-5a0d05768556.herokuapp.com/new)
 
 
