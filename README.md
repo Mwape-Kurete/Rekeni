@@ -42,3 +42,39 @@ Rekeni is a music recommendation and review platform designed to connect users a
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma"/>
 </p>
 
+# Start Up
+Follow these steps to install and start Rekeni locally: 
+1. Clone the Repository 
+   First, clone the repository from GitHub:
+   ```bash
+    git clone https://github.com/your-username/rekeni.git
+    cd rekeni
+   ```
+2. Install Dependencies
+   You’ll need to install dependencies for both the frontend and backend. The project structure typically has separate folders for each.
+   ```bash
+      cd backend
+      npm install
+   ```
+3. Set Up Environment Variables
+   To connect with external APIs and MongoDB, you’ll need to create environment variable files for both the front end and the back end.
+  - Backend: In the backend directory, create a .env file with the following configuration:
+   ```bash
+      MONGODB_URI=your_mongodb_connection_string
+      EXTERNAL_API_KEY=your_external_api_key  # For all third-party APIs ( Spotify, LastFm, & TasteDive)
+   ```
+4. Start the application
+   To run the app locally, you’ll need to start both the backend and frontend servers. You can use separate terminal tabs or windows for each process.
+   - Backend: Start the server (in the server directory).
+     ```bash
+       npm node index.js
+     ```
+   - Frontend: Start the React app (in the client directory).
+     _note: make sure you've included "proxy": "http://localhost:5000" in your package.json, this way your frontend api calls point to the PORT that the server is running on_
+     ```bash
+         npm start
+     ```
+5. Testing the App
+   Once both servers are running:
+  - Open a browser and go to http://localhost:3000.
+  - You should see the Rekeni homepage and be able to explore its features.
