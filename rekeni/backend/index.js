@@ -33,10 +33,7 @@ app.use(timeout("60s"));
 // CORS middleware with default settings (allow all origins)
 app.use(
   cors({
-    origin: [
-      "https://rekeni-backend-app-5a0d05768556.herokuapp.com",
-      "http://localhost:3000",
-    ],
+    origin: ["https://rekeni.oa.r.appspot.com/", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
