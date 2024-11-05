@@ -31,28 +31,26 @@ app.use(express.json());
 app.use(timeout("60s"));
 
 // CORS middleware with default settings (allow all origins)
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://rekeni-backend-app-5a0d05768556.herokuapp.com",
+      "http://localhost:3000",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
-// Static file serving for the frontend (adjust the path as needed)
-app.use(express.static(path.resolve(__dirname, "build")));
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
-// Custom timeout handler middleware
-app.use((req, res, next) => {
-  res.setTimeout(60000, () => {
-    console.error("Request timed out.");
-    res.status(503).json({ error: "Service unavailable: request timed out" });
-  });
-  next();
-});
+// Handle preflight OPTIONS requests
+app.options("*", cors());
 
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    connectTimeoutMS: 60000,
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => {
@@ -75,6 +73,14 @@ app.use("/api/searchAlbums", searchSpotifyRoute);
 app.use("/api/discover", discoverRoute);
 app.use("/api/newReleases", newReleasesRoute);
 app.use("/api/fetchAlbum", fetchAlbumRoute);
+
+// Static file serving for the frontend (adjust the path as needed)
+app.use(express.static(path.resolve(__dirname, "build")));
+
+// Catch-all handler to serve `index.html` for all paths
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
