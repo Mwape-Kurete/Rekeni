@@ -164,7 +164,7 @@ _Google Cloud Platform_
 [GCP: Rekeni](https://rekeni.oa.r.appspot.com/new)
 ___
 _Heroku_ 
-[Heroku: Rekeni]([https://rekeni-backend-app-5a0d05768556.herokuapp.com/](https://rekeni-backend-app-5a0d05768556.herokuapp.com/singleAlbum?query=0U28P0QVB1QRxpqp5IHOlH))
+[Heroku: Rekeni](https://rekeni-backend-app-5a0d05768556.herokuapp.com/new)
 
 
 ***
