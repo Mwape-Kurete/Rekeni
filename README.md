@@ -164,11 +164,11 @@ Link to my demonstration video:
 # Deployed Site
 _Google Cloud Platform_ 
 
-[GCP: Rekeni](https://rekeni.oa.r.appspot.com/new)
+[GCP: Rekeni](https://rekeni.oa.r.appspot.com/login)
 ___
 _Heroku_ 
 
-[Heroku: Rekeni](https://rekeni-backend-app-5a0d05768556.herokuapp.com/new)
+[Heroku: Rekeni](https://rekeni-backend-app-5a0d05768556.herokuapp.com/login)
 
 
 ***
